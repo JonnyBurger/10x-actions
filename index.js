@@ -50,6 +50,7 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
         switch (_c.label) {
             case 0:
                 myToken = core.getInput("github-token");
+                console.log(myToken.length);
                 cwd = core.getInput("pod-dir");
                 octokit = new github.GitHub(myToken);
                 _a = github.context, ref = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;

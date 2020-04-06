@@ -7,6 +7,7 @@ const exec = require("@actions/exec");
 
 xns(async () => {
   const myToken = core.getInput("github-token");
+  console.log(myToken.length);
   const cwd = core.getInput("pod-dir");
 
   const octokit = new github.GitHub(myToken);

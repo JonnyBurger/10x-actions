@@ -54,10 +54,15 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 cwd = core.getInput("pod-dir");
                 octokit = new github.GitHub(myToken);
                 _a = github.context, ref = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
+                console.log({
+                    owner: owner,
+                    repo: repo,
+                    ref: ref.replace("/refs/", ""),
+                });
                 return [4 /*yield*/, octokit.git.getRef({
                         owner: owner,
                         repo: repo,
-                        ref: ref.replace("/refs/", "/"),
+                        ref: ref.replace("/refs/", ""),
                     })];
             case 1:
                 curentRef = _c.sent();

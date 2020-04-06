@@ -44,6 +44,24 @@ var xns_1 = require("xns");
 var core = require("@actions/core");
 var github = require("@actions/github");
 var exec = require("@actions/exec");
+var isPodfileTheSame = function (file1, file2) {
+    var exceptions = ["DoubleConversion", "Folly", "glog"];
+    var split1 = file1.split("\n");
+    var split2 = file2.split("\n");
+    if (split2.length !== split1.length) {
+        return false;
+    }
+    for (var i = 0; i < split1.length; i++) {
+        var line1 = split1[i];
+        var line2 = split2[i];
+        if (line1.toLowerCase() !== line2.toLowerCase()) {
+            if (!exceptions.some(function (e) { return split1.includes(e) && split2.includes(e); })) {
+                return false;
+            }
+        }
+    }
+    return true;
+};
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     var myToken, cwd, octokit, _a, wrongRef, _b, owner, repo, ref, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, curentRef, latestCommit, tree, commit;
     return __generator(this, function (_c) {
@@ -75,7 +93,7 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
             case 5:
                 podfileLockAfter = _c.sent();
                 console.log("Got Podfile before, now running pod install...");
-                if (!(podfileLockBefore.toLowerCase() !== podfileLockAfter.toLowerCase() ||
+                if (!(!isPodfileTheSame(podfileLockBefore, podfileLockAfter) ||
                     podfileBefore !== podfileAfter)) return [3 /*break*/, 11];
                 console.log("The Podfile is different, let me fix that");
                 return [4 /*yield*/, octokit.git.getRef({
@@ -136,8 +154,8 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                     })];
             case 10:
                 _c.sent();
-                console.log("Fixed the fucking Podfile. Failing this commit now, wait for the next one!");
-                throw new Error("Podfile is not up to date (commit fix was made)");
+                console.log("Fixed the fucking Podfile.");
+                return [3 /*break*/, 12];
             case 11:
                 console.log("Pod file is up to date!");
                 _c.label = 12;

@@ -45,7 +45,7 @@ var core = require("@actions/core");
 var github = require("@actions/github");
 var exec = require("@actions/exec");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var myToken, cwd, octokit, _a, wrongRef, _b, owner, repo, ref, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, curentRef, latestCommit, commit;
+    var myToken, cwd, octokit, _a, wrongRef, _b, owner, repo, ref, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, curentRef, latestCommit, tree, commit;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
@@ -112,16 +112,22 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                         ],
                     })];
             case 8:
-                commit = _c.sent();
+                tree = _c.sent();
                 return [4 /*yield*/, octokit.git.createCommit({
                         repo: github.context.repo.repo,
                         owner: github.context.repo.owner,
                         message: "🤖 Fixed your fucking Podfile",
-                        tree: commit.data.sha,
+                        tree: tree.data.sha,
                         parents: [curentRef.data.object.sha],
                     })];
             case 9:
-                _c.sent();
+                commit = _c.sent();
+                console.log({
+                    repo: repo,
+                    owner: owner,
+                    ref: ref,
+                    sha: commit.data.sha,
+                });
                 return [4 /*yield*/, octokit.git.updateRef({
                         repo: repo,
                         owner: owner,

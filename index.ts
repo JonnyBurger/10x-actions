@@ -46,7 +46,7 @@ xns(async () => {
       repo,
       commit_sha: curentRef.data.object.sha,
     });
-    const commit = await octokit.git.createTree({
+    const tree = await octokit.git.createTree({
       repo: github.context.repo.repo,
       owner: github.context.repo.owner,
       base_tree: latestCommit.data.sha,
@@ -65,12 +65,18 @@ xns(async () => {
         },
       ],
     });
-    await octokit.git.createCommit({
+    const commit = await octokit.git.createCommit({
       repo: github.context.repo.repo,
       owner: github.context.repo.owner,
       message: "🤖 Fixed your fucking Podfile",
-      tree: commit.data.sha,
+      tree: tree.data.sha,
       parents: [curentRef.data.object.sha],
+    });
+    console.log({
+      repo: repo,
+      owner: owner,
+      ref,
+      sha: commit.data.sha,
     });
     await octokit.git.updateRef({
       repo: repo,

@@ -5,12 +5,6 @@ import core = require("@actions/core");
 import github = require("@actions/github");
 import exec = require("@actions/exec");
 
-const areLockfilesTheSame = (file1: string, file2: string) => {
-  if (file1.toLowerCase() !== file2.toLowerCase()) {
-    return false;
-  }
-};
-
 xns(async () => {
   const myToken = core.getInput("github-token");
   const cwd = core.getInput("pod-dir");

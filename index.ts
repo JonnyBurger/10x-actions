@@ -11,7 +11,6 @@ xns(async () => {
   const cwd = core.getInput("pod-dir");
 
   const octokit = new github.GitHub(myToken);
-
   const {
     ref,
     repo: { owner, repo },
@@ -20,7 +19,7 @@ xns(async () => {
   const curentRef = await octokit.git.getRef({
     owner,
     repo,
-    ref,
+    ref: ref.replace("/refs/", "/"),
   });
   const latestCommit = await octokit.git.getCommit({
     owner,

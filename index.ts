@@ -39,7 +39,7 @@ xns(async () => {
   const podfilePath = `${cwd}/Podfile`;
   const podfileLockPath = `${cwd}/Podfile.lock`;
   console.log("Got Podfile before, now running pod install...");
-  exec.exec("pod", ["install"], {
+  await exec.exec("pod", ["install"], {
     cwd,
   });
   const podfileAfter = await fs.promises.readFile(podfilePath, "utf-8");

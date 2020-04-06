@@ -41,19 +41,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var xns_1 = require("xns");
-var core_1 = __importDefault(require("@actions/core"));
-var github_1 = __importDefault(require("@actions/github"));
-var exec_1 = __importDefault(require("@actions/exec"));
+var core = require("@actions/core");
+var github = require("@actions/github");
+var exec = require("@actions/exec");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     var myToken, cwd, octokit, _a, ref, _b, owner, repo, curentRef, latestCommit, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, podfileBlob, podfileLockBlob, commit;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                myToken = core_1.default.getInput("github-token");
+                myToken = core.getInput("github-token");
                 console.log(myToken.length);
-                cwd = core_1.default.getInput("pod-dir");
-                octokit = new github_1.default.GitHub(myToken);
-                _a = github_1.default.context, ref = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
+                cwd = core.getInput("pod-dir");
+                octokit = new github.GitHub(myToken);
+                _a = github.context, ref = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
                 console.log({
                     owner: owner,
                     repo: repo,
@@ -82,7 +82,7 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 podfilePath = cwd + "/Podfile";
                 podfileLockPath = cwd + "/Podfile.lock";
                 console.log("Got Podfile before, now running pod install...");
-                return [4 /*yield*/, exec_1.default.exec("pod", ["install"], {
+                return [4 /*yield*/, exec.exec("pod", ["install"], {
                         cwd: cwd,
                     })];
             case 5:
@@ -98,22 +98,22 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                     podfileBefore !== podfileAfter)) return [3 /*break*/, 13];
                 console.log("The Podfile is different, let me fix that");
                 return [4 /*yield*/, octokit.git.createBlob({
-                        repo: github_1.default.context.repo.repo,
-                        owner: github_1.default.context.repo.owner,
+                        repo: github.context.repo.repo,
+                        owner: github.context.repo.owner,
                         content: podfileAfter,
                     })];
             case 8:
                 podfileBlob = _c.sent();
                 return [4 /*yield*/, octokit.git.createBlob({
-                        repo: github_1.default.context.repo.repo,
-                        owner: github_1.default.context.repo.owner,
+                        repo: github.context.repo.repo,
+                        owner: github.context.repo.owner,
                         content: podfileLockAfter,
                     })];
             case 9:
                 podfileLockBlob = _c.sent();
                 return [4 /*yield*/, octokit.git.createTree({
-                        repo: github_1.default.context.repo.repo,
-                        owner: github_1.default.context.repo.owner,
+                        repo: github.context.repo.repo,
+                        owner: github.context.repo.owner,
                         base_tree: latestCommit.data.sha,
                         tree: [
                             {
@@ -133,8 +133,8 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
             case 10:
                 commit = _c.sent();
                 return [4 /*yield*/, octokit.git.createCommit({
-                        repo: github_1.default.context.repo.repo,
-                        owner: github_1.default.context.repo.owner,
+                        repo: github.context.repo.repo,
+                        owner: github.context.repo.owner,
                         committer: {
                             email: "hi@jonny.io",
                             name: "jonnybot",

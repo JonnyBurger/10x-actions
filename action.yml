@@ -1,5 +1,7 @@
 name: 'Run pod install'
 description: 'Run CocoaPods `pod install`'
+inputs:
+outputs:
 runs:
   using: 'node12'
   main: 'index.js'

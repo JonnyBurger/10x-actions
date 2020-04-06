@@ -41,17 +41,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var xns_1 = require("xns");
-var core = require("@actions/core");
+var core_1 = __importDefault(require("@actions/core"));
 var github_1 = __importDefault(require("@actions/github"));
-var exec = require("@actions/exec");
+var exec_1 = __importDefault(require("@actions/exec"));
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     var myToken, cwd, octokit, _a, ref, _b, owner, repo, curentRef, latestCommit, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, podfileBlob, podfileLockBlob, commit;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
-                myToken = core.getInput("github-token");
+                myToken = core_1.default.getInput("github-token");
                 console.log(myToken.length);
-                cwd = core.getInput("pod-dir");
+                cwd = core_1.default.getInput("pod-dir");
                 octokit = new github_1.default.GitHub(myToken);
                 _a = github_1.default.context, ref = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
                 console.log({
@@ -82,7 +82,7 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 podfilePath = cwd + "/Podfile";
                 podfileLockPath = cwd + "/Podfile.lock";
                 console.log("Got Podfile before, now running pod install...");
-                return [4 /*yield*/, exec.exec("pod", ["install"], {
+                return [4 /*yield*/, exec_1.default.exec("pod", ["install"], {
                         cwd: cwd,
                     })];
             case 5:

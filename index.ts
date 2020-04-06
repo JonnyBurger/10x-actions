@@ -7,24 +7,20 @@ import exec = require("@actions/exec");
 
 xns(async () => {
   const myToken = core.getInput("github-token");
-  console.log(myToken.length);
   const cwd = core.getInput("pod-dir");
 
   const octokit = new github.GitHub(myToken);
   const {
-    ref,
+    ref: wrongRef,
     repo: { owner, repo },
   } = github.context;
 
-  console.log({
-    owner,
-    repo,
-    ref: ref.replace("refs/", ""),
-  });
+  const ref = wrongRef.replace("refs/", "");
+
   const curentRef = await octokit.git.getRef({
     owner,
     repo,
-    ref: ref.replace("refs/", ""),
+    ref,
   });
   const latestCommit = await octokit.git.getCommit({
     owner,

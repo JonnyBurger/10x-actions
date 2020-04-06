@@ -45,24 +45,19 @@ var core = require("@actions/core");
 var github = require("@actions/github");
 var exec = require("@actions/exec");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var myToken, cwd, octokit, _a, ref, _b, owner, repo, curentRef, latestCommit, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, podfileBlob, podfileLockBlob, commit;
+    var myToken, cwd, octokit, _a, wrongRef, _b, owner, repo, ref, curentRef, latestCommit, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, podfileBlob, podfileLockBlob, commit;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
                 myToken = core.getInput("github-token");
-                console.log(myToken.length);
                 cwd = core.getInput("pod-dir");
                 octokit = new github.GitHub(myToken);
-                _a = github.context, ref = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
-                console.log({
-                    owner: owner,
-                    repo: repo,
-                    ref: ref.replace("refs/", ""),
-                });
+                _a = github.context, wrongRef = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
+                ref = wrongRef.replace("refs/", "");
                 return [4 /*yield*/, octokit.git.getRef({
                         owner: owner,
                         repo: repo,
-                        ref: ref.replace("refs/", ""),
+                        ref: ref,
                     })];
             case 1:
                 curentRef = _c.sent();

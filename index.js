@@ -130,10 +130,6 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 return [4 /*yield*/, octokit.git.createCommit({
                         repo: github.context.repo.repo,
                         owner: github.context.repo.owner,
-                        committer: {
-                            email: "hi@jonny.io",
-                            name: "jonnybot",
-                        },
                         message: "🤖 Fixed your fucking Podfile",
                         tree: commit.data.sha,
                         parents: [curentRef.data.object.sha],

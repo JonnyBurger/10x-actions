@@ -45,7 +45,7 @@ var core = require("@actions/core");
 var github = require("@actions/github");
 var exec = require("@actions/exec");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var myToken, cwd, octokit, _a, wrongRef, _b, owner, repo, ref, curentRef, latestCommit, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, podfileBlob, podfileLockBlob, commit;
+    var myToken, cwd, octokit, _a, wrongRef, _b, owner, repo, ref, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, curentRef, latestCommit, commit;
     return __generator(this, function (_c) {
         switch (_c.label) {
             case 0:
@@ -54,25 +54,11 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 octokit = new github.GitHub(myToken);
                 _a = github.context, wrongRef = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
                 ref = wrongRef.replace("refs/", "");
-                return [4 /*yield*/, octokit.git.getRef({
-                        owner: owner,
-                        repo: repo,
-                        ref: ref,
-                    })];
-            case 1:
-                curentRef = _c.sent();
-                return [4 /*yield*/, octokit.git.getCommit({
-                        owner: owner,
-                        repo: repo,
-                        commit_sha: curentRef.data.object.sha,
-                    })];
-            case 2:
-                latestCommit = _c.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(cwd + "/Podfile", "utf-8")];
-            case 3:
+            case 1:
                 podfileBefore = _c.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(cwd + "/Podfile.lock", "utf-8")];
-            case 4:
+            case 2:
                 podfileLockBefore = _c.sent();
                 podfilePath = cwd + "/Podfile";
                 podfileLockPath = cwd + "/Podfile.lock";
@@ -80,32 +66,32 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 return [4 /*yield*/, exec.exec("pod", ["install"], {
                         cwd: cwd,
                     })];
-            case 5:
+            case 3:
                 _c.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(podfilePath, "utf-8")];
-            case 6:
+            case 4:
                 podfileAfter = _c.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(podfileLockPath, "utf-8")];
-            case 7:
+            case 5:
                 podfileLockAfter = _c.sent();
                 console.log("Got Podfile before, now running pod install...");
                 if (!(podfileLockBefore !== podfileLockAfter ||
-                    podfileBefore !== podfileAfter)) return [3 /*break*/, 13];
+                    podfileBefore !== podfileAfter)) return [3 /*break*/, 11];
                 console.log("The Podfile is different, let me fix that");
-                return [4 /*yield*/, octokit.git.createBlob({
-                        repo: github.context.repo.repo,
-                        owner: github.context.repo.owner,
-                        content: podfileAfter,
+                return [4 /*yield*/, octokit.git.getRef({
+                        owner: owner,
+                        repo: repo,
+                        ref: ref,
                     })];
-            case 8:
-                podfileBlob = _c.sent();
-                return [4 /*yield*/, octokit.git.createBlob({
-                        repo: github.context.repo.repo,
-                        owner: github.context.repo.owner,
-                        content: podfileLockAfter,
+            case 6:
+                curentRef = _c.sent();
+                return [4 /*yield*/, octokit.git.getCommit({
+                        owner: owner,
+                        repo: repo,
+                        commit_sha: curentRef.data.object.sha,
                     })];
-            case 9:
-                podfileLockBlob = _c.sent();
+            case 7:
+                latestCommit = _c.sent();
                 return [4 /*yield*/, octokit.git.createTree({
                         repo: github.context.repo.repo,
                         owner: github.context.repo.owner,
@@ -125,7 +111,7 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                             },
                         ],
                     })];
-            case 10:
+            case 8:
                 commit = _c.sent();
                 return [4 /*yield*/, octokit.git.createCommit({
                         repo: github.context.repo.repo,
@@ -134,22 +120,23 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                         tree: commit.data.sha,
                         parents: [curentRef.data.object.sha],
                     })];
-            case 11:
+            case 9:
                 _c.sent();
                 return [4 /*yield*/, octokit.git.updateRef({
                         repo: repo,
                         owner: owner,
                         ref: ref,
                         sha: curentRef.data.object.sha,
+                        force: true,
                     })];
-            case 12:
+            case 10:
                 _c.sent();
                 console.log("Fixed the fucking Podfile. Failing this commit now, wait for the next one!");
                 throw new Error("Podfile is not up to date (commit fix was made)");
-            case 13:
+            case 11:
                 console.log("Pod file is up to date!");
-                _c.label = 14;
-            case 14: return [2 /*return*/];
+                _c.label = 12;
+            case 12: return [2 /*return*/];
         }
     });
 }); });

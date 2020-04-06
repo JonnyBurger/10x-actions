@@ -2,8 +2,9 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 const exec = require("@actions/exec");
 const fs = require("fs");
+const xns = require("xns");
 
-try {
+xns(async () => {
   const myToken = core.getInput("github-token");
   const cwd = core.getInput("pod-dir");
 
@@ -61,7 +62,7 @@ try {
         email: "hi@jonny.io",
         name: "jonnybot",
       },
-      message: "🤖 Fixing your fucking Podfile",
+      message: "🤖 Fixed your fucking Podfile",
       tree: commit.data.sha,
       parents: [ref.data.object.sha],
     });
@@ -70,7 +71,11 @@ try {
       owner: github.context.repo.owner,
       ref: github.context.ref,
     });
+    console.log(
+      "Fixed the fucking Podfile. Failing this commit now, wait for the next one!"
+    );
+    throw new Error("Podfile is not up to date (commit fix was made)");
+  } else {
+    console.log("Pod file is up to date!");
   }
-} catch (error) {
-  core.setFailed(error.message);
-}
+});

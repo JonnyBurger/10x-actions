@@ -44,11 +44,6 @@ var xns_1 = require("xns");
 var core = require("@actions/core");
 var github = require("@actions/github");
 var exec = require("@actions/exec");
-var areLockfilesTheSame = function (file1, file2) {
-    if (file1.toLowerCase() !== file2.toLowerCase()) {
-        return false;
-    }
-};
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     var myToken, cwd, octokit, _a, wrongRef, _b, owner, repo, ref, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, curentRef, latestCommit, tree, commit;
     return __generator(this, function (_c) {

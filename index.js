@@ -126,8 +126,7 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                         repo: repo,
                         owner: owner,
                         ref: ref,
-                        sha: curentRef.data.object.sha,
-                        force: true,
+                        sha: commit.data.sha,
                     })];
             case 10:
                 _c.sent();

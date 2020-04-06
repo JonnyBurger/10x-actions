@@ -76,7 +76,7 @@ xns(async () => {
       repo: repo,
       owner: owner,
       ref,
-      sha: curentRef.data.object.sha,
+      sha: commit.data.sha,
     });
     console.log(
       "Fixed the fucking Podfile. Failing this commit now, wait for the next one!"

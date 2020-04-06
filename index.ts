@@ -5,6 +5,26 @@ import core = require("@actions/core");
 import github = require("@actions/github");
 import exec = require("@actions/exec");
 
+const isPodfileTheSame = (file1: string, file2: string) => {
+  const exceptions = ["DoubleConversion", "Folly", "glog"];
+  const split1 = file1.split("\n");
+  const split2 = file2.split("\n");
+
+  if (split2.length !== split1.length) {
+    return false;
+  }
+  for (let i = 0; i < split1.length; i++) {
+    const line1 = split1[i];
+    const line2 = split2[i];
+    if (line1.toLowerCase() !== line2.toLowerCase()) {
+      if (!exceptions.some((e) => split1.includes(e) && split2.includes(e))) {
+        return false;
+      }
+    }
+  }
+  return true;
+};
+
 xns(async () => {
   const myToken = core.getInput("github-token");
   const cwd = core.getInput("pod-dir");
@@ -32,7 +52,7 @@ xns(async () => {
   const podfileLockAfter = await fs.promises.readFile(podfileLockPath, "utf-8");
   console.log("Got Podfile before, now running pod install...");
   if (
-    podfileLockBefore.toLowerCase() !== podfileLockAfter.toLowerCase() ||
+    !isPodfileTheSame(podfileLockBefore, podfileLockAfter) ||
     podfileBefore !== podfileAfter
   ) {
     console.log("The Podfile is different, let me fix that");
@@ -84,10 +104,7 @@ xns(async () => {
       ref,
       sha: commit.data.sha,
     });
-    console.log(
-      "Fixed the fucking Podfile. Failing this commit now, wait for the next one!"
-    );
-    throw new Error("Podfile is not up to date (commit fix was made)");
+    console.log("Fixed the fucking Podfile.");
   } else {
     console.log("Pod file is up to date!");
   }

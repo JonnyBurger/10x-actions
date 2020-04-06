@@ -19,12 +19,12 @@ xns(async () => {
   console.log({
     owner,
     repo,
-    ref: ref.replace("/refs/", ""),
+    ref: ref.replace("refs/", ""),
   });
   const curentRef = await octokit.git.getRef({
     owner,
     repo,
-    ref: ref.replace("/refs/", ""),
+    ref: ref.replace("refs/", ""),
   });
   const latestCommit = await octokit.git.getCommit({
     owner,

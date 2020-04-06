@@ -57,12 +57,12 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 console.log({
                     owner: owner,
                     repo: repo,
-                    ref: ref.replace("/refs/", ""),
+                    ref: ref.replace("refs/", ""),
                 });
                 return [4 /*yield*/, octokit.git.getRef({
                         owner: owner,
                         repo: repo,
-                        ref: ref.replace("/refs/", ""),
+                        ref: ref.replace("refs/", ""),
                     })];
             case 1:
                 curentRef = _c.sent();

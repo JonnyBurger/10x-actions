@@ -5,6 +5,12 @@ import core = require("@actions/core");
 import github = require("@actions/github");
 import exec = require("@actions/exec");
 
+const areLockfilesTheSame = (file1: string, file2: string) => {
+  if (file1.toLowerCase() !== file2.toLowerCase()) {
+    return false;
+  }
+};
+
 xns(async () => {
   const myToken = core.getInput("github-token");
   const cwd = core.getInput("pod-dir");
@@ -32,7 +38,7 @@ xns(async () => {
   const podfileLockAfter = await fs.promises.readFile(podfileLockPath, "utf-8");
   console.log("Got Podfile before, now running pod install...");
   if (
-    podfileLockBefore !== podfileLockAfter ||
+    podfileLockBefore.toLowerCase() !== podfileLockAfter.toLowerCase() ||
     podfileBefore !== podfileAfter
   ) {
     console.log("The Podfile is different, let me fix that");

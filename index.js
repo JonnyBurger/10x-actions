@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var xns_1 = require("xns");
 var core = require("@actions/core");
-var github = require("@actions/github");
+var github_1 = __importDefault(require("@actions/github"));
 var exec = require("@actions/exec");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     var myToken, cwd, octokit, _a, ref, _b, owner, repo, curentRef, latestCommit, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter, podfileBlob, podfileLockBlob, commit;
@@ -52,8 +52,8 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 myToken = core.getInput("github-token");
                 console.log(myToken.length);
                 cwd = core.getInput("pod-dir");
-                octokit = new github.GitHub(myToken);
-                _a = github.context, ref = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
+                octokit = new github_1.default.GitHub(myToken);
+                _a = github_1.default.context, ref = _a.ref, _b = _a.repo, owner = _b.owner, repo = _b.repo;
                 console.log({
                     owner: owner,
                     repo: repo,
@@ -98,35 +98,33 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                     podfileBefore !== podfileAfter)) return [3 /*break*/, 13];
                 console.log("The Podfile is different, let me fix that");
                 return [4 /*yield*/, octokit.git.createBlob({
-                        repo: github.context.repo.repo,
-                        owner: github.context.repo.owner,
+                        repo: github_1.default.context.repo.repo,
+                        owner: github_1.default.context.repo.owner,
                         content: podfileAfter,
                     })];
             case 8:
                 podfileBlob = _c.sent();
                 return [4 /*yield*/, octokit.git.createBlob({
-                        repo: github.context.repo.repo,
-                        owner: github.context.repo.owner,
+                        repo: github_1.default.context.repo.repo,
+                        owner: github_1.default.context.repo.owner,
                         content: podfileLockAfter,
                     })];
             case 9:
                 podfileLockBlob = _c.sent();
                 return [4 /*yield*/, octokit.git.createTree({
-                        repo: github.context.repo.repo,
-                        owner: github.context.repo.owner,
+                        repo: github_1.default.context.repo.repo,
+                        owner: github_1.default.context.repo.owner,
                         base_tree: latestCommit.data.sha,
                         tree: [
                             {
                                 content: podfileAfter,
                                 path: podfilePath,
-                                sha: podfileBlob.data.sha,
                                 type: "blob",
                                 mode: "100644",
                             },
                             {
                                 content: podfileLockAfter,
                                 path: podfileLockPath,
-                                sha: podfileLockBlob.data.sha,
                                 type: "blob",
                                 mode: "100644",
                             },
@@ -135,8 +133,8 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
             case 10:
                 commit = _c.sent();
                 return [4 /*yield*/, octokit.git.createCommit({
-                        repo: github.context.repo.repo,
-                        owner: github.context.repo.owner,
+                        repo: github_1.default.context.repo.repo,
+                        owner: github_1.default.context.repo.owner,
                         committer: {
                             email: "hi@jonny.io",
                             name: "jonnybot",

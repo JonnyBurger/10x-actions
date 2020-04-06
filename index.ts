@@ -17,16 +17,6 @@ xns(async () => {
 
   const ref = wrongRef.replace("refs/", "");
 
-  const curentRef = await octokit.git.getRef({
-    owner,
-    repo,
-    ref,
-  });
-  const latestCommit = await octokit.git.getCommit({
-    owner,
-    repo,
-    commit_sha: curentRef.data.object.sha,
-  });
   const podfileBefore = await fs.promises.readFile(`${cwd}/Podfile`, "utf-8");
   const podfileLockBefore = await fs.promises.readFile(
     `${cwd}/Podfile.lock`,
@@ -46,15 +36,15 @@ xns(async () => {
     podfileBefore !== podfileAfter
   ) {
     console.log("The Podfile is different, let me fix that");
-    const podfileBlob = await octokit.git.createBlob({
-      repo: github.context.repo.repo,
-      owner: github.context.repo.owner,
-      content: podfileAfter,
+    const curentRef = await octokit.git.getRef({
+      owner,
+      repo,
+      ref,
     });
-    const podfileLockBlob = await octokit.git.createBlob({
-      repo: github.context.repo.repo,
-      owner: github.context.repo.owner,
-      content: podfileLockAfter,
+    const latestCommit = await octokit.git.getCommit({
+      owner,
+      repo,
+      commit_sha: curentRef.data.object.sha,
     });
     const commit = await octokit.git.createTree({
       repo: github.context.repo.repo,
@@ -87,6 +77,7 @@ xns(async () => {
       owner: owner,
       ref,
       sha: curentRef.data.object.sha,
+      force: true,
     });
     console.log(
       "Fixed the fucking Podfile. Failing this commit now, wait for the next one!"

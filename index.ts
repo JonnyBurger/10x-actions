@@ -1,8 +1,9 @@
-import core from "@actions/core";
-import github from "@actions/github";
-import exec from "@actions/exec";
 import fs from "fs";
 import { xns } from "xns";
+
+const core = require("@actions/core");
+const github = require("@actions/github");
+const exec = require("@actions/exec");
 
 xns(async () => {
   const myToken = core.getInput("github-token");

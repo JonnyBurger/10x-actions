@@ -2,7 +2,7 @@ import fs from "fs";
 import { xns } from "xns";
 
 const core = require("@actions/core");
-const github = require("@actions/github");
+import github from "@actions/github";
 const exec = require("@actions/exec");
 
 xns(async () => {
@@ -68,14 +68,12 @@ xns(async () => {
         {
           content: podfileAfter,
           path: podfilePath,
-          sha: podfileBlob.data.sha,
           type: "blob",
           mode: "100644",
         },
         {
           content: podfileLockAfter,
           path: podfileLockPath,
-          sha: podfileLockBlob.data.sha,
           type: "blob",
           mode: "100644",
         },

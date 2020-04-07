@@ -73,7 +73,21 @@ export const makeDependabotFile = xns(() => {
 			isReactNativeApp(repo)
 				? {
 						package_manager: 'ruby:bundler',
-						directory: '/',
+						directory: repo === 'JonnyBurger/bestande' ? '/app/ios' : '/',
+						update_schedule: 'live',
+						automerged_updates: [
+							{
+								match: {
+									dependency_name: 'fastlane',
+								},
+							},
+						],
+				  }
+				: null,
+			repo === 'JonnyBurger/bestande'
+				? {
+						package_manager: 'ruby:bundler',
+						directory: repo === 'JonnyBurger/bestande' ? '/app/android' : '/',
 						update_schedule: 'live',
 						automerged_updates: [
 							{

@@ -17,9 +17,11 @@
     "@actions/exec": "^1.0.3",
     "@actions/github": "^2.1.1",
     "@jonny/eslint-config": "^2.1.116",
+    "@types/yaml": "^1.2.0",
     "eslint": "^6.8.0",
     "execa": "^4.0.0",
     "typescript": "^3.8.3",
-    "xns": "^2.0.7"
+    "xns": "^2.0.7",
+    "yaml": "^1.8.3"
   }
 }

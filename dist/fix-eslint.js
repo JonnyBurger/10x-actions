@@ -80,7 +80,10 @@ exports.fixEslint = function () { return __awaiter(void 0, void 0, void 0, funct
                     return [2 /*return*/];
                 }
                 splittedEslintCommand = eslintCommand.split(' ');
-                return [4 /*yield*/, exec.exec('eslint', __spreadArrays(['--fix'], splittedEslintCommand.slice(1)))];
+                return [4 /*yield*/, exec.exec('npx', __spreadArrays([
+                        'eslint',
+                        '--fix'
+                    ], splittedEslintCommand.slice(1)))];
             case 2:
                 _a.sent();
                 gitStatus = '';

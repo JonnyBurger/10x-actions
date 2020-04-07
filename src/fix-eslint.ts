@@ -35,7 +35,12 @@ export const fixEslint = async (): Promise<void> => {
 	await exec.exec('npx', [
 		'eslint',
 		'--fix',
-		...splittedEslintCommand.slice(1),
+		...splittedEslintCommand.slice(1).map((s) => {
+			if (s.startsWith("'") && s.endsWith("'")) {
+				return s.substr(1, s.length - 2);
+			}
+			return s;
+		}),
 	]);
 	let gitStatus = '';
 	await exec.exec('git', ['status'], {

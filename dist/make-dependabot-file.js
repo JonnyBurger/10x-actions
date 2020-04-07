@@ -35,6 +35,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -43,6 +50,9 @@ var xns_1 = __importDefault(require("xns"));
 var yaml_1 = __importDefault(require("yaml"));
 var getIgnoredUpdates = function () {
     return ['uuid', '@types/uuid', 'react-native-bootsplash'];
+};
+var getAutomergedUpdates = function () {
+    return ['aws-sdk'];
 };
 xns_1.default(function () { return __awaiter(void 0, void 0, void 0, function () {
     var input;
@@ -54,7 +64,28 @@ xns_1.default(function () { return __awaiter(void 0, void 0, void 0, function ()
                     package_manager: 'javascript',
                     directory: '/',
                     update_schedule: 'live',
-                    ignored_updates: getIgnoredUpdates,
+                    ignored_updates: getIgnoredUpdates().map(function (name) {
+                        return {
+                            match: {
+                                dependency_name: name,
+                            },
+                        };
+                    }),
+                    automerged_updates: __spreadArrays([
+                        {
+                            match: {
+                                dependency_type: 'all',
+                                update_type: 'all',
+                                dependency_name: '@types/*',
+                            },
+                        }
+                    ], getAutomergedUpdates().map(function (name) {
+                        return {
+                            match: {
+                                dependency_name: name,
+                            },
+                        };
+                    })),
                 },
             ],
         };

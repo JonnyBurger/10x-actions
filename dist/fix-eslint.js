@@ -108,7 +108,7 @@ exports.fixEslint = function () { return __awaiter(void 0, void 0, void 0, funct
                     .filter(function (f) { return f.includes('modified:'); });
                 modifiedFiles = modifiedRaw
                     .map(function (m) { return m.replace('modified:', '').trim(); })
-                    .filter(function (f) { return f !== 'package-lock.json'; })
+                    .filter(function (f) { return f !== 'package-lock.json' && f.includes('Podfile.lock'); })
                     // Fix a maximum of 20 files
                     .slice(0, 20);
                 console.log('modified files:');

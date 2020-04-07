@@ -58,6 +58,7 @@ export const fixEslint = async (): Promise<void> => {
 		.filter((f) => f.includes('modified:'));
 	const modifiedFiles = modifiedRaw
 		.map((m) => m.replace('modified:', '').trim())
+		.filter((f) => f !== 'package-lock.json')
 		// Fix a maximum of 20 files
 		.slice(0, 20);
 	console.log('modified files:');

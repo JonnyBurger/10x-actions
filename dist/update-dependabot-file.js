@@ -35,24 +35,46 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var xns_1 = require("xns");
-var fix_eslint_1 = require("./fix-eslint");
-var fix_cocoapods_1 = require("./fix-cocoapods");
-var update_dependabot_file_1 = require("./update-dependabot-file");
-xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
+var fs_1 = __importDefault(require("fs"));
+var make_dependabot_file_1 = require("./make-dependabot-file");
+var commit_file_1 = require("./commit-file");
+exports.updateDependabotFile = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var dependabotFilePath, fileExists, fileBefore, _a, fileAfter;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                dependabotFilePath = '.dependabot/config.yml';
+                fileExists = fs_1.default.existsSync(dependabotFilePath);
+                if (!fileExists) return [3 /*break*/, 2];
+                return [4 /*yield*/, fs_1.default.promises.readFile(dependabotFilePath, 'utf8')];
             case 1:
-                _a.sent();
-                return [4 /*yield*/, fix_eslint_1.fixEslint()];
+                _a = _b.sent();
+                return [3 /*break*/, 3];
             case 2:
-                _a.sent();
-                return [4 /*yield*/, fix_cocoapods_1.fixCocoaPods()];
+                _a = '';
+                _b.label = 3;
             case 3:
-                _a.sent();
-                return [2 /*return*/];
+                fileBefore = _a;
+                fileAfter = make_dependabot_file_1.makeDependabotFile();
+                if (fileBefore === fileAfter) {
+                    console.log('Dependabot file is up to date!');
+                    return [2 /*return*/];
+                }
+                if (!(fileBefore !== fileAfter)) return [3 /*break*/, 5];
+                return [4 /*yield*/, commit_file_1.commitFiles([
+                        {
+                            content: fileAfter,
+                            path: dependabotFilePath,
+                        },
+                    ], 'improved the dependabot file for you 🤖')];
+            case 4:
+                _b.sent();
+                _b.label = 5;
+            case 5: return [2 /*return*/];
         }
     });
-}); });
+}); };

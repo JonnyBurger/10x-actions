@@ -34,7 +34,7 @@ const getAutomergedUpdates = (repo: string): string[] => {
 	].filter(truthy);
 };
 
-xns(async () => {
+export const makeDependabotFile = xns(() => {
 	const context = getContext();
 	const repo = `${context.owner}/${context.repo}`;
 	const input = {

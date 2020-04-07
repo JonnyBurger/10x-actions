@@ -1,12 +1,18 @@
 import fs from 'fs';
 import {isPodfileTheSame} from './is-podfile-the-same';
 import {commitFiles} from './commit-file';
+import {getContext} from './get-context';
 
 import core = require('@actions/core');
 import exec = require('@actions/exec');
 
 export const fixCocoaPods = async (): Promise<void> => {
 	const cwd = core.getInput('pod-dir');
+	const context = getContext();
+	if (context.repo === 'bestande') {
+		console.log('Fixing Cocoapods is not yet supported in Bestande, continuing.')
+		return.
+	}
 
 	const podfileExists = fs.existsSync(`${cwd}/Podfile`);
 	if (!podfileExists) {

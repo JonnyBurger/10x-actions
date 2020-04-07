@@ -42,14 +42,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var is_podfile_the_same_1 = require("./is-podfile-the-same");
 var commit_file_1 = require("./commit-file");
+var get_context_1 = require("./get-context");
 var core = require("@actions/core");
 var exec = require("@actions/exec");
 exports.fixCocoaPods = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var cwd, podfileExists, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter;
+    var cwd, context, podfileExists, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 cwd = core.getInput('pod-dir');
+                context = get_context_1.getContext();
+                if (context.repo === 'bestande') {
+                    console.log('Fixing Cocoapods is not yet supported in Bestande, continuing.');
+                    return [2 /*return*/, .
+                    ];
+                }
                 podfileExists = fs_1.default.existsSync(cwd + "/Podfile");
                 if (!podfileExists) {
                     console.log('No podfile exists. Nothing to update.');

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "eslint 'src/**'"
   },
   "keywords": [
     "github",
@@ -16,6 +16,8 @@
     "@actions/core": "^1.2.3",
     "@actions/exec": "^1.0.3",
     "@actions/github": "^2.1.1",
+    "@jonny/eslint-config": "^2.1.116",
+    "eslint": "^6.8.0",
     "execa": "^4.0.0",
     "typescript": "^3.8.3",
     "xns": "^2.0.7"

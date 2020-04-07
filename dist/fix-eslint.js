@@ -114,6 +114,10 @@ exports.fixEslint = function () { return __awaiter(void 0, void 0, void 0, funct
                     .slice(0, 20);
                 console.log('modified files:');
                 console.log(modifiedFiles);
+                if (modifiedFiles.length === 0) {
+                    console.log('There are no ESLint errors (that can be fixed)! Well done!');
+                    return [2 /*return*/];
+                }
                 return [4 /*yield*/, Promise.all(modifiedFiles.map(function (path) { return __awaiter(void 0, void 0, void 0, function () {
                         var _a;
                         return __generator(this, function (_b) {

@@ -47,6 +47,7 @@ exports.updateDependabotFile = function () { return __awaiter(void 0, void 0, vo
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
+                console.log('Checking for dependabot updates...');
                 dependabotFilePath = '.dependabot/config.yml';
                 fileExists = fs_1.default.existsSync(dependabotFilePath);
                 if (!fileExists) return [3 /*break*/, 2];
@@ -73,6 +74,7 @@ exports.updateDependabotFile = function () { return __awaiter(void 0, void 0, vo
                     ], 'improved the dependabot file for you 🤖')];
             case 4:
                 _b.sent();
+                console.log('Updated the dependabot file with the newest improvements.');
                 _b.label = 5;
             case 5: return [2 /*return*/];
         }

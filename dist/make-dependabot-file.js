@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __spreadArrays = (this && this.__spreadArrays) || function () {
     for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
     for (var r = Array(s), k = 0, i = 0; i < il; i++)
@@ -43,21 +54,17 @@ var getAutomergedUpdates = function (repo) {
 exports.makeDependabotFile = xns_1.default(function () {
     var context = get_context_1.getContext();
     var repo = context.owner + "/" + context.repo;
+    var ignoredUpdates = getIgnoredUpdates(repo).map(function (name) {
+        return {
+            match: {
+                dependency_name: name,
+            },
+        };
+    });
     var input = {
         version: 1,
         update_configs: [
-            {
-                package_manager: 'javascript',
-                directory: '/',
-                update_schedule: 'live',
-                ignored_updates: getIgnoredUpdates(repo).map(function (name) {
-                    return {
-                        match: {
-                            dependency_name: name,
-                        },
-                    };
-                }),
-                automerged_updates: __spreadArrays([
+            __assign(__assign({ package_manager: 'javascript', directory: '/', update_schedule: 'live' }, (ignoredUpdates.length > 0 ? { ignored_updates: ignoredUpdates } : {})), { automerged_updates: __spreadArrays([
                     {
                         match: {
                             dependency_type: 'all',
@@ -71,9 +78,7 @@ exports.makeDependabotFile = xns_1.default(function () {
                             dependency_name: name,
                         },
                     };
-                })),
-                version_requirement_updates: 'increase_versions',
-            },
+                })), version_requirement_updates: 'increase_versions' }),
             isReactNativeApp
                 ? {
                     package_manager: 'ruby:bundler',

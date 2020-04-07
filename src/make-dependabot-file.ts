@@ -37,6 +37,13 @@ const getAutomergedUpdates = (repo: string): string[] => {
 export const makeDependabotFile = xns(() => {
 	const context = getContext();
 	const repo = `${context.owner}/${context.repo}`;
+	const ignoredUpdates = getIgnoredUpdates(repo).map((name) => {
+		return {
+			match: {
+				dependency_name: name,
+			},
+		};
+	});
 	const input = {
 		version: 1,
 		update_configs: [
@@ -44,13 +51,7 @@ export const makeDependabotFile = xns(() => {
 				package_manager: 'javascript',
 				directory: '/',
 				update_schedule: 'live',
-				ignored_updates: getIgnoredUpdates(repo).map((name) => {
-					return {
-						match: {
-							dependency_name: name,
-						},
-					};
-				}),
+				...(ignoredUpdates.length > 0 ? {ignored_updates: ignoredUpdates} : {}),
 				automerged_updates: [
 					{
 						match: {

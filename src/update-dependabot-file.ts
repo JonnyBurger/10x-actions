@@ -3,6 +3,7 @@ import {makeDependabotFile} from './make-dependabot-file';
 import {commitFiles} from './commit-file';
 
 export const updateDependabotFile = async (): Promise<void> => {
+	console.log('Checking for dependabot updates...');
 	const dependabotFilePath = '.dependabot/config.yml';
 	const fileExists = fs.existsSync(dependabotFilePath);
 	const fileBefore = fileExists
@@ -23,5 +24,6 @@ export const updateDependabotFile = async (): Promise<void> => {
 			],
 			'improved the dependabot file for you 🤖'
 		);
+		console.log('Updated the dependabot file with the newest improvements.');
 	}
 };

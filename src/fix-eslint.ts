@@ -63,6 +63,10 @@ export const fixEslint = async (): Promise<void> => {
 		.slice(0, 20);
 	console.log('modified files:');
 	console.log(modifiedFiles);
+	if (modifiedFiles.length === 0) {
+		console.log('There are no ESLint errors (that can be fixed)! Well done!');
+		return;
+	}
 	const filesToChange = await Promise.all(
 		modifiedFiles.map(async (path) => {
 			return {

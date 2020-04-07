@@ -54,8 +54,7 @@ exports.fixCocoaPods = function () { return __awaiter(void 0, void 0, void 0, fu
                 context = get_context_1.getContext();
                 if (context.repo === 'bestande') {
                     console.log('Fixing Cocoapods is not yet supported in Bestande, continuing.');
-                    return [2 /*return*/, .
-                    ];
+                    return [2 /*return*/];
                 }
                 podfileExists = fs_1.default.existsSync(cwd + "/Podfile");
                 if (!podfileExists) {

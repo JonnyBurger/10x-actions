@@ -10,8 +10,10 @@ export const fixCocoaPods = async (): Promise<void> => {
 	const cwd = core.getInput('pod-dir');
 	const context = getContext();
 	if (context.repo === 'bestande') {
-		console.log('Fixing Cocoapods is not yet supported in Bestande, continuing.')
-		return.
+		console.log(
+			'Fixing Cocoapods is not yet supported in Bestande, continuing.'
+		);
+		return;
 	}
 
 	const podfileExists = fs.existsSync(`${cwd}/Podfile`);

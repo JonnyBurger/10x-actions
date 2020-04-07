@@ -52,7 +52,6 @@ export const fixEslint = async (): Promise<void> => {
 		},
 	});
 	console.log('Git status:');
-	console.log(gitStatus);
 	const modifiedRaw = gitStatus
 		.split('\n')
 		.filter((f) => f.includes('modified:'));
@@ -62,7 +61,7 @@ export const fixEslint = async (): Promise<void> => {
 		// Fix a maximum of 20 files
 		.slice(0, 20);
 	console.log('modified files:');
-	console.log(modifiedFiles);
+	console.log(modifiedFiles.join('\n'));
 	if (modifiedFiles.length === 0) {
 		console.log('There are no ESLint errors (that can be fixed)! Well done!');
 		return;

@@ -48,25 +48,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var xns_1 = __importDefault(require("xns"));
 var yaml_1 = __importDefault(require("yaml"));
-var getIgnoredUpdates = function () {
-    return ['uuid', '@types/uuid', 'react-native-bootsplash'];
+var get_context_1 = require("./get-context");
+var truthy_1 = require("./truthy");
+var getIgnoredUpdates = function (repo) {
+    return [
+        repo === 'JonnyBurger/bestande' ? 'uuid' : null,
+        repo === 'JonnyBurger/bestande' ? 'file-loader' : null,
+        repo === 'JonnyBurger/bestande' ? '@types/uuid' : null,
+        repo === 'JonnyBurger/anysticker-app' ? 'react-native-bootsplash' : null,
+    ].filter(truthy_1.truthy);
 };
-var getAutomergedUpdates = function () {
+var isReactNativeApp = function (repo) {
+    return (repo === 'JonnyBurger/bestande' ||
+        repo === 'JonnyBurger/anysticker-app' ||
+        repo === 'JonnyBurger/pingpongtische');
+};
+var getAutomergedUpdates = function (repo) {
     return [
         'aws-sdk',
         'stripe',
         'tics',
-        '@react-native-community/cli',
+        isReactNativeApp(repo) ? '@react-native-community/cli' : null,
         'ava',
         'polished',
         'prettier',
         '@jonny/eslint-config',
         'mongodb-memory-server',
-    ];
+    ].filter(truthy_1.truthy);
 };
 xns_1.default(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var input;
+    var context, repo, input;
     return __generator(this, function (_a) {
+        context = get_context_1.getContext();
+        repo = context.owner + "/" + context.repo;
         input = {
             version: 1,
             update_configs: [
@@ -74,7 +88,7 @@ xns_1.default(function () { return __awaiter(void 0, void 0, void 0, function ()
                     package_manager: 'javascript',
                     directory: '/',
                     update_schedule: 'live',
-                    ignored_updates: getIgnoredUpdates().map(function (name) {
+                    ignored_updates: getIgnoredUpdates(repo).map(function (name) {
                         return {
                             match: {
                                 dependency_name: name,
@@ -89,15 +103,30 @@ xns_1.default(function () { return __awaiter(void 0, void 0, void 0, function ()
                                 dependency_name: '@types/*',
                             },
                         }
-                    ], getAutomergedUpdates().map(function (name) {
+                    ], getAutomergedUpdates(repo).map(function (name) {
                         return {
                             match: {
                                 dependency_name: name,
                             },
                         };
                     })),
+                    version_requirement_updates: 'increase_versions',
                 },
-            ],
+                isReactNativeApp
+                    ? {
+                        package_manager: 'ruby:bundler',
+                        directory: '/',
+                        update_schedule: 'live',
+                        automerged_updates: [
+                            {
+                                match: {
+                                    dependency_name: 'fastlane',
+                                },
+                            },
+                        ],
+                    }
+                    : null,
+            ].filter(Boolean),
         };
         return [2 /*return*/, yaml_1.default.stringify(input)];
     });

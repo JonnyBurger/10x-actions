@@ -1,25 +1,42 @@
 import xns from 'xns';
 import yaml from 'yaml';
+import {getContext} from './get-context';
+import {truthy} from './truthy';
 
-const getIgnoredUpdates = (): string[] => {
-	return ['uuid', '@types/uuid', 'react-native-bootsplash'];
+const getIgnoredUpdates = (repo: string): string[] => {
+	return [
+		repo === 'JonnyBurger/bestande' ? 'uuid' : null,
+		repo === 'JonnyBurger/bestande' ? 'file-loader' : null,
+		repo === 'JonnyBurger/bestande' ? '@types/uuid' : null,
+		repo === 'JonnyBurger/anysticker-app' ? 'react-native-bootsplash' : null,
+	].filter(truthy);
 };
 
-const getAutomergedUpdates = (): string[] => {
+const isReactNativeApp = (repo: string): boolean => {
+	return (
+		repo === 'JonnyBurger/bestande' ||
+		repo === 'JonnyBurger/anysticker-app' ||
+		repo === 'JonnyBurger/pingpongtische'
+	);
+};
+
+const getAutomergedUpdates = (repo: string): string[] => {
 	return [
 		'aws-sdk',
 		'stripe',
 		'tics',
-		'@react-native-community/cli',
+		isReactNativeApp(repo) ? '@react-native-community/cli' : null,
 		'ava',
 		'polished',
 		'prettier',
 		'@jonny/eslint-config',
 		'mongodb-memory-server',
-	];
+	].filter(truthy);
 };
 
 xns(async () => {
+	const context = getContext();
+	const repo = `${context.owner}/${context.repo}`;
 	const input = {
 		version: 1,
 		update_configs: [
@@ -27,7 +44,7 @@ xns(async () => {
 				package_manager: 'javascript',
 				directory: '/',
 				update_schedule: 'live',
-				ignored_updates: getIgnoredUpdates().map((name) => {
+				ignored_updates: getIgnoredUpdates(repo).map((name) => {
 					return {
 						match: {
 							dependency_name: name,
@@ -42,7 +59,7 @@ xns(async () => {
 							dependency_name: '@types/*',
 						},
 					},
-					...getAutomergedUpdates().map((name) => {
+					...getAutomergedUpdates(repo).map((name) => {
 						return {
 							match: {
 								dependency_name: name,
@@ -50,8 +67,23 @@ xns(async () => {
 						};
 					}),
 				],
+				version_requirement_updates: 'increase_versions',
 			},
-		],
+			isReactNativeApp
+				? {
+						package_manager: 'ruby:bundler',
+						directory: '/',
+						update_schedule: 'live',
+						automerged_updates: [
+							{
+								match: {
+									dependency_name: 'fastlane',
+								},
+							},
+						],
+				  }
+				: null,
+		].filter(Boolean),
 	};
 	return yaml.stringify(input);
 });

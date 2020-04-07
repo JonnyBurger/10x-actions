@@ -84,6 +84,7 @@ exports.fixEslint = function () { return __awaiter(void 0, void 0, void 0, funct
                         'eslint',
                         '--fix'
                     ], splittedEslintCommand.slice(1).map(function (s) {
+                        console.log(s);
                         if (s.startsWith("'") && s.endsWith("'")) {
                             return s.substr(1, s.length - 2);
                         }

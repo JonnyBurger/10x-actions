@@ -35,20 +35,59 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var xns_1 = require("xns");
-var fix_eslint_1 = require("./fix-eslint");
-var fix_cocoapods_1 = require("./fix-cocoapods");
-xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
+var fs_1 = __importDefault(require("fs"));
+var is_podfile_the_same_1 = require("./is-podfile-the-same");
+var commit_file_1 = require("./commit-file");
+var core = require("@actions/core");
+var exec = require("@actions/exec");
+exports.fixCocoaPods = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var cwd, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, fix_eslint_1.fixEslint()];
+            case 0:
+                cwd = core.getInput('pod-dir');
+                return [4 /*yield*/, fs_1.default.promises.readFile(cwd + "/Podfile", 'utf-8')];
             case 1:
-                _a.sent();
-                return [4 /*yield*/, fix_cocoapods_1.fixCocoaPods()];
+                podfileBefore = _a.sent();
+                return [4 /*yield*/, fs_1.default.promises.readFile(cwd + "/Podfile.lock", 'utf-8')];
             case 2:
+                podfileLockBefore = _a.sent();
+                podfilePath = cwd + "/Podfile";
+                podfileLockPath = cwd + "/Podfile.lock";
+                console.log('Got Podfile before, now running pod install...');
+                return [4 /*yield*/, exec.exec('pod', ['install'], {
+                        cwd: cwd,
+                    })];
+            case 3:
                 _a.sent();
+                return [4 /*yield*/, fs_1.default.promises.readFile(podfilePath, 'utf-8')];
+            case 4:
+                podfileAfter = _a.sent();
+                return [4 /*yield*/, fs_1.default.promises.readFile(podfileLockPath, 'utf-8')];
+            case 5:
+                podfileLockAfter = _a.sent();
+                console.log('Got Podfile before, now running pod install...');
+                if (is_podfile_the_same_1.isPodfileTheSame(podfileLockAfter, podfileLockBefore) &&
+                    podfileBefore === podfileAfter) {
+                    console.log('Podfile is up to date.');
+                    return [2 /*return*/];
+                }
+                console.log('The Podfile is different, let me fix that');
+                return [4 /*yield*/, commit_file_1.commitFiles([
+                        { path: podfilePath, content: podfileAfter },
+                        {
+                            path: podfileLockPath,
+                            content: podfileLockAfter,
+                        },
+                    ], '🤖 Fixed your fucking Podfile')];
+            case 6:
+                _a.sent();
+                console.log('Fixed the fucking Podfile.');
                 return [2 /*return*/];
         }
     });
-}); });
+}); };

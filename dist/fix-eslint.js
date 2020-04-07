@@ -49,19 +49,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var commit_file_1 = require("./commit-file");
 var exec = require("@actions/exec");
+var findEslintCommand = function (commandRaw) {
+    var command = commandRaw.replace(/\$\((.*)\)/g, '');
+    var splitByAnd = command.split('&&').map(function (a) { return a.trim(); });
+    var eslintCommand = splitByAnd.find(function (s) { return s.startsWith('eslint'); });
+    return eslintCommand !== null && eslintCommand !== void 0 ? eslintCommand : null;
+};
+var findAnyEslintCommand = function (scripts) {
+    var keys = Object.keys(scripts);
+    for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+        var key = keys_1[_i];
+        var command = findEslintCommand(scripts[key]);
+        if (command) {
+            return command;
+        }
+    }
+    return null;
+};
 exports.fixEslint = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var packageJson, parsed, testCommand, splitByAnd, eslintCommand, splittedEslintCommand, gitStatus, modifiedRaw, modifiedFiles, filesToChange;
+    var packageJson, parsed, eslintCommand, splittedEslintCommand, gitStatus, modifiedRaw, modifiedFiles, filesToChange;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, fs_1.default.promises.readFile('package.json', 'utf-8')];
             case 1:
                 packageJson = _a.sent();
                 parsed = JSON.parse(packageJson);
-                testCommand = parsed.scripts.test;
-                splitByAnd = testCommand.split('&&').map(function (a) { return a.trim(); });
-                eslintCommand = splitByAnd.find(function (s) { return s.startsWith('eslint'); });
+                eslintCommand = findAnyEslintCommand(parsed.scripts);
                 if (!eslintCommand) {
-                    console.log('Test script: ', testCommand);
                     console.log('No ESLint command found. Quitting.');
                     return [2 /*return*/];
                 }

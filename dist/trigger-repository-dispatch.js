@@ -36,27 +36,41 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var xns_1 = require("xns");
-var fix_eslint_1 = require("./fix-eslint");
-var fix_cocoapods_1 = require("./fix-cocoapods");
-var update_dependabot_file_1 = require("./update-dependabot-file");
-var trigger_repository_dispatch_1 = require("./trigger-repository-dispatch");
-xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
+var get_context_1 = require("./get-context");
+var get_octokit_1 = require("./get-octokit");
+var github = require("@actions/github");
+exports.triggerRepositoryDispatch = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var context, octokit, commit, commitMessage;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, trigger_repository_dispatch_1.triggerRepositoryDispatch()];
+            case 0:
+                context = get_context_1.getContext();
+                octokit = get_octokit_1.getOctokit();
+                return [4 /*yield*/, octokit.git.getCommit({
+                        repo: context.repo,
+                        owner: context.owner,
+                        commit_sha: github.context.sha,
+                    })];
             case 1:
-                _a.sent();
-                return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
-            case 2:
-                _a.sent();
-                return [4 /*yield*/, fix_eslint_1.fixEslint()];
-            case 3:
-                _a.sent();
-                return [4 /*yield*/, fix_cocoapods_1.fixCocoaPods()];
-            case 4:
-                _a.sent();
+                commit = _a.sent();
+                commitMessage = commit.data.message;
+                if (commitMessage.includes('[android]')) {
+                    console.log('Found [android] in build message, will trigger repository dispatch event');
+                    octokit.repos.createDispatchEvent({
+                        event_type: 'build-android',
+                        owner: context.owner,
+                        repo: context.repo,
+                    });
+                }
+                if (commitMessage.includes('[ios]')) {
+                    console.log('Found [ios] in build message, will trigger repository dispatch event');
+                    octokit.repos.createDispatchEvent({
+                        event_type: 'build-ios',
+                        owner: context.owner,
+                        repo: context.repo,
+                    });
+                }
                 return [2 /*return*/];
         }
     });
-}); });
+}); };

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import {xns} from 'xns';
 import {commitFiles} from './commit-file';
+import {fixEslint} from './fix-eslint';
 
 import core = require('@actions/core');
 import exec = require('@actions/exec');
@@ -26,6 +27,7 @@ const isPodfileTheSame = (file1: string, file2: string): boolean => {
 };
 
 xns(async () => {
+	await fixEslint();
 	const cwd = core.getInput('pod-dir');
 
 	const podfileBefore = await fs.promises.readFile(`${cwd}/Podfile`, 'utf-8');

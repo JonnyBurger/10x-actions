@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var xns_1 = require("xns");
 var commit_file_1 = require("./commit-file");
+var fix_eslint_1 = require("./fix-eslint");
 var core = require("@actions/core");
 var exec = require("@actions/exec");
 var isPodfileTheSame = function (file1, file2) {
@@ -66,13 +67,15 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     var cwd, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
+            case 0: return [4 /*yield*/, fix_eslint_1.fixEslint()];
+            case 1:
+                _a.sent();
                 cwd = core.getInput('pod-dir');
                 return [4 /*yield*/, fs_1.default.promises.readFile(cwd + "/Podfile", 'utf-8')];
-            case 1:
+            case 2:
                 podfileBefore = _a.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(cwd + "/Podfile.lock", 'utf-8')];
-            case 2:
+            case 3:
                 podfileLockBefore = _a.sent();
                 podfilePath = cwd + "/Podfile";
                 podfileLockPath = cwd + "/Podfile.lock";
@@ -80,17 +83,17 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                 return [4 /*yield*/, exec.exec('pod', ['install'], {
                         cwd: cwd,
                     })];
-            case 3:
+            case 4:
                 _a.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(podfilePath, 'utf-8')];
-            case 4:
+            case 5:
                 podfileAfter = _a.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(podfileLockPath, 'utf-8')];
-            case 5:
+            case 6:
                 podfileLockAfter = _a.sent();
                 console.log('Got Podfile before, now running pod install...');
                 if (!(!isPodfileTheSame(podfileLockBefore, podfileLockAfter) ||
-                    podfileBefore !== podfileAfter)) return [3 /*break*/, 7];
+                    podfileBefore !== podfileAfter)) return [3 /*break*/, 8];
                 console.log('The Podfile is different, let me fix that');
                 return [4 /*yield*/, commit_file_1.commitFiles([
                         { path: podfilePath, content: podfileAfter },
@@ -99,14 +102,14 @@ xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
                             content: podfileLockAfter,
                         },
                     ], '🤖 Fixed your fucking Podfile')];
-            case 6:
+            case 7:
                 _a.sent();
                 console.log('Fixed the fucking Podfile.');
-                return [3 /*break*/, 8];
-            case 7:
+                return [3 /*break*/, 9];
+            case 8:
                 console.log('Pod file is up to date!');
-                _a.label = 8;
-            case 8: return [2 /*return*/];
+                _a.label = 9;
+            case 9: return [2 /*return*/];
         }
     });
 }); });

@@ -17,7 +17,7 @@ export const triggerRepositoryDispatch = async (): Promise<void> => {
 		console.log(
 			'Found [android] in build message, will trigger repository dispatch event'
 		);
-		octokit.repos.createDispatchEvent({
+		await octokit.repos.createDispatchEvent({
 			event_type: 'build-android',
 			owner: context.owner,
 			repo: context.repo,
@@ -27,7 +27,7 @@ export const triggerRepositoryDispatch = async (): Promise<void> => {
 		console.log(
 			'Found [ios] in build message, will trigger repository dispatch event'
 		);
-		octokit.repos.createDispatchEvent({
+		await octokit.repos.createDispatchEvent({
 			event_type: 'build-ios',
 			owner: context.owner,
 			repo: context.repo,

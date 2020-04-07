@@ -54,23 +54,28 @@ exports.triggerRepositoryDispatch = function () { return __awaiter(void 0, void 
             case 1:
                 commit = _a.sent();
                 commitMessage = commit.data.message;
-                if (commitMessage.includes('[android]')) {
-                    console.log('Found [android] in build message, will trigger repository dispatch event');
-                    octokit.repos.createDispatchEvent({
+                if (!commitMessage.includes('[android]')) return [3 /*break*/, 3];
+                console.log('Found [android] in build message, will trigger repository dispatch event');
+                return [4 /*yield*/, octokit.repos.createDispatchEvent({
                         event_type: 'build-android',
                         owner: context.owner,
                         repo: context.repo,
-                    });
-                }
-                if (commitMessage.includes('[ios]')) {
-                    console.log('Found [ios] in build message, will trigger repository dispatch event');
-                    octokit.repos.createDispatchEvent({
+                    })];
+            case 2:
+                _a.sent();
+                _a.label = 3;
+            case 3:
+                if (!commitMessage.includes('[ios]')) return [3 /*break*/, 5];
+                console.log('Found [ios] in build message, will trigger repository dispatch event');
+                return [4 /*yield*/, octokit.repos.createDispatchEvent({
                         event_type: 'build-ios',
                         owner: context.owner,
                         repo: context.repo,
-                    });
-                }
-                return [2 /*return*/];
+                    })];
+            case 4:
+                _a.sent();
+                _a.label = 5;
+            case 5: return [2 /*return*/];
         }
     });
 }); };

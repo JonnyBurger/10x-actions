@@ -103,7 +103,6 @@ exports.fixEslint = function () { return __awaiter(void 0, void 0, void 0, funct
             case 3:
                 _a.sent();
                 console.log('Git status:');
-                console.log(gitStatus);
                 modifiedRaw = gitStatus
                     .split('\n')
                     .filter(function (f) { return f.includes('modified:'); });
@@ -113,7 +112,7 @@ exports.fixEslint = function () { return __awaiter(void 0, void 0, void 0, funct
                     // Fix a maximum of 20 files
                     .slice(0, 20);
                 console.log('modified files:');
-                console.log(modifiedFiles);
+                console.log(modifiedFiles.join('\n'));
                 if (modifiedFiles.length === 0) {
                     console.log('There are no ESLint errors (that can be fixed)! Well done!');
                     return [2 /*return*/];

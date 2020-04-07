@@ -50,8 +50,8 @@ exports.updateDependabotFile = function () { return __awaiter(void 0, void 0, vo
             case 0:
                 console.log('Checking for dependabot updates...');
                 context = get_context_1.getContext();
-                if (context.ref !== 'refs/heads/master') {
-                    console.log('Not checking for dependabot file because we are on master.');
+                if (context.ref !== 'heads/master') {
+                    console.log('Not checking for dependabot file because we are not on master.');
                     return [2 /*return*/];
                 }
                 dependabotFilePath = '.dependabot/config.yml';

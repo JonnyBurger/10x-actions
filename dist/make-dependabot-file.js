@@ -52,7 +52,17 @@ var getIgnoredUpdates = function () {
     return ['uuid', '@types/uuid', 'react-native-bootsplash'];
 };
 var getAutomergedUpdates = function () {
-    return ['aws-sdk'];
+    return [
+        'aws-sdk',
+        'stripe',
+        'tics',
+        '@react-native-community/cli',
+        'ava',
+        'polished',
+        'prettier',
+        '@jonny/eslint-config',
+        'mongodb-memory-server',
+    ];
 };
 xns_1.default(function () { return __awaiter(void 0, void 0, void 0, function () {
     var input;

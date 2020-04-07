@@ -6,7 +6,17 @@ const getIgnoredUpdates = (): string[] => {
 };
 
 const getAutomergedUpdates = (): string[] => {
-	return ['aws-sdk'];
+	return [
+		'aws-sdk',
+		'stripe',
+		'tics',
+		'@react-native-community/cli',
+		'ava',
+		'polished',
+		'prettier',
+		'@jonny/eslint-config',
+		'mongodb-memory-server',
+	];
 };
 
 xns(async () => {

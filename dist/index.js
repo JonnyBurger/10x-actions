@@ -40,10 +40,15 @@ var xns_1 = require("xns");
 var fix_eslint_1 = require("./fix-eslint");
 var fix_cocoapods_1 = require("./fix-cocoapods");
 var update_dependabot_file_1 = require("./update-dependabot-file");
+var get_context_1 = require("./get-context");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
+    var context;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
+            case 0:
+                context = get_context_1.getContext();
+                console.log('REF:', context.ref);
+                return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
             case 1:
                 _a.sent();
                 return [4 /*yield*/, fix_eslint_1.fixEslint()];

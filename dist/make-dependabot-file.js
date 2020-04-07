@@ -79,7 +79,7 @@ exports.makeDependabotFile = xns_1.default(function () {
                         },
                     };
                 })), version_requirement_updates: 'increase_versions' }),
-            isReactNativeApp
+            isReactNativeApp(repo)
                 ? {
                     package_manager: 'ruby:bundler',
                     directory: '/',

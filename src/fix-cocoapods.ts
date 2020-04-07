@@ -8,6 +8,12 @@ import exec = require('@actions/exec');
 export const fixCocoaPods = async (): Promise<void> => {
 	const cwd = core.getInput('pod-dir');
 
+	const podfileExists = fs.existsSync(`${cwd}/Podfile`);
+	if (!podfileExists) {
+		console.log('No podfile exists. Nothing to update.');
+		return;
+	}
+
 	const podfileBefore = await fs.promises.readFile(`${cwd}/Podfile`, 'utf-8');
 	const podfileLockBefore = await fs.promises.readFile(
 		`${cwd}/Podfile.lock`,

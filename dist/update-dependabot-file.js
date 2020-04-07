@@ -42,12 +42,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var make_dependabot_file_1 = require("./make-dependabot-file");
 var commit_file_1 = require("./commit-file");
+var get_context_1 = require("./get-context");
 exports.updateDependabotFile = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var dependabotFilePath, fileExists, fileBefore, _a, fileAfter;
+    var context, dependabotFilePath, fileExists, fileBefore, _a, fileAfter;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 console.log('Checking for dependabot updates...');
+                context = get_context_1.getContext();
+                if (context.ref !== 'refs/heads/master') {
+                    console.log('Not checking for dependabot file because we are on master.');
+                    return [2 /*return*/];
+                }
                 dependabotFilePath = '.dependabot/config.yml';
                 fileExists = fs_1.default.existsSync(dependabotFilePath);
                 if (!fileExists) return [3 /*break*/, 2];

@@ -1,9 +1,15 @@
 import fs from 'fs';
 import {makeDependabotFile} from './make-dependabot-file';
 import {commitFiles} from './commit-file';
+import {getContext} from './get-context';
 
 export const updateDependabotFile = async (): Promise<void> => {
 	console.log('Checking for dependabot updates...');
+	const context = getContext();
+	if (context.ref !== 'refs/heads/master') {
+		console.log('Not checking for dependabot file because we are on master.');
+		return;
+	}
 	const dependabotFilePath = '.dependabot/config.yml';
 	const fileExists = fs.existsSync(dependabotFilePath);
 	const fileBefore = fileExists

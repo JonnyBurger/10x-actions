@@ -45,11 +45,16 @@ var commit_file_1 = require("./commit-file");
 var core = require("@actions/core");
 var exec = require("@actions/exec");
 exports.fixCocoaPods = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var cwd, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter;
+    var cwd, podfileExists, podfileBefore, podfileLockBefore, podfilePath, podfileLockPath, podfileAfter, podfileLockAfter;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 cwd = core.getInput('pod-dir');
+                podfileExists = fs_1.default.existsSync(cwd + "/Podfile");
+                if (!podfileExists) {
+                    console.log('No podfile exists. Nothing to update.');
+                    return [2 /*return*/];
+                }
                 return [4 /*yield*/, fs_1.default.promises.readFile(cwd + "/Podfile", 'utf-8')];
             case 1:
                 podfileBefore = _a.sent();

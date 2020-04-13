@@ -12,7 +12,6 @@ exports.isPodfileTheSame = function (file1, file2) {
         var line2 = split2[i];
         if (line1.toLowerCase() !== line2.toLowerCase()) {
             if (!exceptions.some(function (e) { return line1.includes(e) && line2.includes(e); })) {
-                console.log({ line1: line1, line2: line2 });
                 return { value: false };
             }
         }

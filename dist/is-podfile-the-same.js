@@ -7,15 +7,20 @@ exports.isPodfileTheSame = function (file1, file2) {
     if (split2.length !== split1.length) {
         return false;
     }
-    for (var i = 0; i < split1.length; i++) {
+    var _loop_1 = function (i) {
         var line1 = split1[i];
         var line2 = split2[i];
         if (line1.toLowerCase() !== line2.toLowerCase()) {
-            if (!exceptions.some(function (e) { return split1.includes(e) && split2.includes(e); })) {
+            if (!exceptions.some(function (e) { return line1.includes(e) && line2.includes(e); })) {
                 console.log({ line1: line1, line2: line2 });
-                return false;
+                return { value: false };
             }
         }
+    };
+    for (var i = 0; i < split1.length; i++) {
+        var state_1 = _loop_1(i);
+        if (typeof state_1 === "object")
+            return state_1.value;
     }
     return true;
 };

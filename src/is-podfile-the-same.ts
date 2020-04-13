@@ -10,7 +10,7 @@ export const isPodfileTheSame = (file1: string, file2: string): boolean => {
 		const line1 = split1[i];
 		const line2 = split2[i];
 		if (line1.toLowerCase() !== line2.toLowerCase()) {
-			if (!exceptions.some((e) => split1.includes(e) && split2.includes(e))) {
+			if (!exceptions.some((e) => line1.includes(e) && line2.includes(e))) {
 				console.log({line1, line2});
 				return false;
 			}

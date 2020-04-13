@@ -70,7 +70,7 @@ export const makeDependabotFile = xns(() => {
 				],
 				version_requirement_updates: 'increase_versions',
 			},
-			isReactNativeApp(repo)
+			isReactNativeApp(repo) && repo !== 'JonnyBurger/pingpongtische'
 				? {
 						package_manager: 'ruby:bundler',
 						directory: repo === 'JonnyBurger/bestande' ? '/app/ios' : '/',

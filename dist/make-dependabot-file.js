@@ -43,6 +43,7 @@ var getAutomergedUpdates = function (repo) {
         'aws-sdk',
         'stripe',
         'tics',
+        'semver',
         isReactNativeApp(repo) ? '@react-native-community/cli' : null,
         'ava',
         'polished',

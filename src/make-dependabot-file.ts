@@ -25,6 +25,7 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'aws-sdk',
 		'stripe',
 		'tics',
+		'semver',
 		isReactNativeApp(repo) ? '@react-native-community/cli' : null,
 		'ava',
 		'polished',

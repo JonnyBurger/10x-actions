@@ -31,6 +31,7 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'polished',
 		'prettier',
 		'@jonny/eslint-config',
+		'ts-node',
 		'mongodb-memory-server',
 	].filter(truthy);
 };

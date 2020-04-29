@@ -45,7 +45,11 @@ var update_dependabot_file_1 = require("./update-dependabot-file");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, add_missing_dependencies_1.addMissingDependencies(['prettier-plugin-organize-imports'])];
+            case 0: return [4 /*yield*/, add_missing_dependencies_1.addMissingDependencies([
+                    'prettier-plugin-organize-imports',
+                    'eslint',
+                    'prettier',
+                ])];
             case 1:
                 _a.sent();
                 return [4 /*yield*/, trigger_repository_dispatch_1.triggerRepositoryDispatch()];

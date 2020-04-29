@@ -102,5 +102,5 @@ export const makeDependabotFile = xns(() => {
 				: null,
 		].filter(Boolean),
 	};
-	return yaml.stringify(input);
+	return yaml.stringify(input, {});
 });

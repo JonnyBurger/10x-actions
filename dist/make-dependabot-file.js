@@ -111,5 +111,5 @@ exports.makeDependabotFile = xns_1.default(function () {
                 : null,
         ].filter(Boolean),
     };
-    return yaml_1.default.stringify(input);
+    return yaml_1.default.stringify(input, {});
 });

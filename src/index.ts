@@ -6,7 +6,11 @@ import {triggerRepositoryDispatch} from './trigger-repository-dispatch';
 import {updateDependabotFile} from './update-dependabot-file';
 
 xns(async () => {
-	await addMissingDependencies(['prettier-plugin-organize-imports']);
+	await addMissingDependencies([
+		'prettier-plugin-organize-imports',
+		'eslint',
+		'prettier',
+	]);
 	await triggerRepositoryDispatch();
 	await updateDependabotFile();
 	await fixEslint();

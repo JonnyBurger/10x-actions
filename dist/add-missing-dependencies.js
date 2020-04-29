@@ -52,17 +52,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var commit_file_1 = require("./commit-file");
-var core = require("@actions/core");
 var exec = require("@actions/exec");
 exports.addMissingDependencies = function (packageNames) { return __awaiter(void 0, void 0, void 0, function () {
-    var cwd, packageJsonPath, packageLockPath, yarnLockPath, packageJsonExists, packageJson, parsedPackageJson, deps, uninstalled, _i, uninstalled_1, pack;
+    var packageJsonPath, packageLockPath, yarnLockPath, packageJsonExists, packageJson, parsedPackageJson, deps, uninstalled, _i, uninstalled_1, pack;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                cwd = core.getInput('pod-dir');
-                packageJsonPath = cwd + "/package.json";
-                packageLockPath = cwd + "/package-lock.json";
-                yarnLockPath = cwd + "/yarn.lock";
+                packageJsonPath = 'package.json';
+                packageLockPath = 'package-lock.json';
+                yarnLockPath = 'yarn.lock';
                 packageJsonExists = fs_1.default.existsSync(packageJsonPath);
                 if (!packageJsonExists) {
                     throw new Error('No package.json exists. This is very strange');
@@ -83,7 +81,7 @@ exports.addMissingDependencies = function (packageNames) { return __awaiter(void
                 if (!(_i < uninstalled_1.length)) return [3 /*break*/, 9];
                 pack = uninstalled_1[_i];
                 if (!fs_1.default.existsSync(packageLockPath)) return [3 /*break*/, 5];
-                return [4 /*yield*/, exec.exec('npm', ['i', '--save-dev', ''], { cwd: cwd })];
+                return [4 /*yield*/, exec.exec('npm', ['i', '--save-dev', ''])];
             case 3:
                 _a.sent();
                 return [4 /*yield*/, commit_file_1.commitFiles([
@@ -99,7 +97,7 @@ exports.addMissingDependencies = function (packageNames) { return __awaiter(void
             case 4:
                 _a.sent();
                 return [3 /*break*/, 8];
-            case 5: return [4 /*yield*/, exec.exec('yarn', ['add', '-D'], { cwd: cwd })];
+            case 5: return [4 /*yield*/, exec.exec('yarn', ['add', '-D'])];
             case 6:
                 _a.sent();
                 return [4 /*yield*/, commit_file_1.commitFiles([

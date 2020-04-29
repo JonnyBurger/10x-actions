@@ -1,17 +1,14 @@
 import fs from 'fs';
 import {commitFiles} from './commit-file';
 
-import core = require('@actions/core');
 import exec = require('@actions/exec');
 
 export const addMissingDependencies = async (
 	packageNames: string[]
 ): Promise<void> => {
-	const cwd = core.getInput('pod-dir');
-
-	const packageJsonPath = `${cwd}/package.json`;
-	const packageLockPath = `${cwd}/package-lock.json`;
-	const yarnLockPath = `${cwd}/yarn.lock`;
+	const packageJsonPath = 'package.json';
+	const packageLockPath = 'package-lock.json';
+	const yarnLockPath = 'yarn.lock';
 
 	const packageJsonExists = fs.existsSync(packageJsonPath);
 	if (!packageJsonExists) {
@@ -33,7 +30,7 @@ export const addMissingDependencies = async (
 	const uninstalled = packageNames.filter((p) => !deps[p]);
 	for (const pack of uninstalled) {
 		if (fs.existsSync(packageLockPath)) {
-			await exec.exec('npm', ['i', '--save-dev', ''], {cwd});
+			await exec.exec('npm', ['i', '--save-dev', '']);
 			await commitFiles(
 				[
 					{
@@ -48,7 +45,7 @@ export const addMissingDependencies = async (
 				`🤖 Installed ${pack} in devDependencies`
 			);
 		} else {
-			await exec.exec('yarn', ['add', '-D'], {cwd});
+			await exec.exec('yarn', ['add', '-D']);
 			await commitFiles(
 				[
 					{

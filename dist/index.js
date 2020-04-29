@@ -37,24 +37,28 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var xns_1 = require("xns");
-var fix_eslint_1 = require("./fix-eslint");
+var add_missing_dependencies_1 = require("./add-missing-dependencies");
 var fix_cocoapods_1 = require("./fix-cocoapods");
-var update_dependabot_file_1 = require("./update-dependabot-file");
+var fix_eslint_1 = require("./fix-eslint");
 var trigger_repository_dispatch_1 = require("./trigger-repository-dispatch");
+var update_dependabot_file_1 = require("./update-dependabot-file");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, trigger_repository_dispatch_1.triggerRepositoryDispatch()];
+            case 0: return [4 /*yield*/, add_missing_dependencies_1.addMissingDependencies(['prettier-plugin-organize-imports'])];
             case 1:
                 _a.sent();
-                return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
+                return [4 /*yield*/, trigger_repository_dispatch_1.triggerRepositoryDispatch()];
             case 2:
                 _a.sent();
-                return [4 /*yield*/, fix_eslint_1.fixEslint()];
+                return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
             case 3:
                 _a.sent();
-                return [4 /*yield*/, fix_cocoapods_1.fixCocoaPods()];
+                return [4 /*yield*/, fix_eslint_1.fixEslint()];
             case 4:
+                _a.sent();
+                return [4 /*yield*/, fix_cocoapods_1.fixCocoaPods()];
+            case 5:
                 _a.sent();
                 return [2 /*return*/];
         }

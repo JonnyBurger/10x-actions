@@ -49,6 +49,7 @@ var getAutomergedUpdates = function (repo) {
         'polished',
         'prettier',
         '@jonny/eslint-config',
+        'ts-node',
         'mongodb-memory-server',
     ].filter(truthy_1.truthy);
 };

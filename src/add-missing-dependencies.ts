@@ -1,5 +1,6 @@
 import fs from 'fs';
 import {commitFiles} from './commit-file';
+
 import core = require('@actions/core');
 import exec = require('@actions/exec');
 

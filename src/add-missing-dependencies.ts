@@ -30,7 +30,7 @@ export const addMissingDependencies = async (
 	const uninstalled = packageNames.filter((p) => !deps[p]);
 	for (const pack of uninstalled) {
 		if (fs.existsSync(packageLockPath)) {
-			await exec.exec('npm', ['i', '--save-dev', '']);
+			await exec.exec('npm', ['i', '--save-dev', pack]);
 			await commitFiles(
 				[
 					{
@@ -45,7 +45,7 @@ export const addMissingDependencies = async (
 				`🤖 Installed ${pack} in devDependencies`
 			);
 		} else {
-			await exec.exec('yarn', ['add', '-D']);
+			await exec.exec('yarn', ['add', '-D', pack]);
 			await commitFiles(
 				[
 					{

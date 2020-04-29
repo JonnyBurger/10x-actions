@@ -81,7 +81,7 @@ exports.addMissingDependencies = function (packageNames) { return __awaiter(void
                 if (!(_i < uninstalled_1.length)) return [3 /*break*/, 9];
                 pack = uninstalled_1[_i];
                 if (!fs_1.default.existsSync(packageLockPath)) return [3 /*break*/, 5];
-                return [4 /*yield*/, exec.exec('npm', ['i', '--save-dev', ''])];
+                return [4 /*yield*/, exec.exec('npm', ['i', '--save-dev', pack])];
             case 3:
                 _a.sent();
                 return [4 /*yield*/, commit_file_1.commitFiles([
@@ -97,7 +97,7 @@ exports.addMissingDependencies = function (packageNames) { return __awaiter(void
             case 4:
                 _a.sent();
                 return [3 /*break*/, 8];
-            case 5: return [4 /*yield*/, exec.exec('yarn', ['add', '-D'])];
+            case 5: return [4 /*yield*/, exec.exec('yarn', ['add', '-D', pack])];
             case 6:
                 _a.sent();
                 return [4 /*yield*/, commit_file_1.commitFiles([

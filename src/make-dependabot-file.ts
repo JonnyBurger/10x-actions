@@ -37,6 +37,7 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'@react-navigation/native',
 		'@react-navigation/stack',
 		'react-native-device-info',
+		'react-native-redash',
 	].filter(truthy);
 };
 

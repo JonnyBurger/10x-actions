@@ -33,6 +33,10 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'@jonny/eslint-config',
 		'ts-node',
 		'mongodb-memory-server',
+		'@react-navigation/bottom-tabs',
+		'@react-navigation/native',
+		'@react-navigation/stack',
+		'react-native-device-info',
 	].filter(truthy);
 };
 

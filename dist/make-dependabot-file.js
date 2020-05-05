@@ -51,6 +51,10 @@ var getAutomergedUpdates = function (repo) {
         '@jonny/eslint-config',
         'ts-node',
         'mongodb-memory-server',
+        '@react-navigation/bottom-tabs',
+        '@react-navigation/native',
+        '@react-navigation/stack',
+        'react-native-device-info',
     ].filter(truthy_1.truthy);
 };
 exports.makeDependabotFile = xns_1.default(function () {

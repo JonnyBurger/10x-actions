@@ -56,6 +56,7 @@ var getAutomergedUpdates = function (repo) {
         '@react-navigation/stack',
         'react-native-device-info',
         'react-native-redash',
+        'typescript',
     ].filter(truthy_1.truthy);
 };
 exports.makeDependabotFile = xns_1.default(function () {

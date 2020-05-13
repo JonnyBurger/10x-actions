@@ -81,7 +81,7 @@ exports.removeExtraneousDependencies = function (packageNames) { return __awaite
                 if (!(_i < uninstalled_1.length)) return [3 /*break*/, 9];
                 pack = uninstalled_1[_i];
                 if (!fs_1.default.existsSync(packageLockPath)) return [3 /*break*/, 5];
-                return [4 /*yield*/, exec.exec('npm', ['i', 'uninstall', pack])];
+                return [4 /*yield*/, exec.exec('npm', ['uninstall', pack])];
             case 3:
                 _a.sent();
                 return [4 /*yield*/, commit_file_1.commitFiles([

@@ -30,7 +30,7 @@ export const removeExtraneousDependencies = async (
 	const uninstalled = packageNames.filter((p) => deps[p]);
 	for (const pack of uninstalled) {
 		if (fs.existsSync(packageLockPath)) {
-			await exec.exec('npm', ['i', 'uninstall', pack]);
+			await exec.exec('npm', ['uninstall', pack]);
 			await commitFiles(
 				[
 					{

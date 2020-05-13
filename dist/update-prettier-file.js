@@ -35,44 +35,66 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var xns_1 = require("xns");
-var add_missing_dependencies_1 = require("./add-missing-dependencies");
-var fix_cocoapods_1 = require("./fix-cocoapods");
-var fix_eslint_1 = require("./fix-eslint");
-var trigger_repository_dispatch_1 = require("./trigger-repository-dispatch");
-var update_dependabot_file_1 = require("./update-dependabot-file");
-var remove_extraneous_dependencies_1 = require("./remove-extraneous-dependencies");
-var update_prettier_file_1 = require("./update-prettier-file");
-xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, remove_extraneous_dependencies_1.removeExtraneousDependencies(['prettier-plugin-organize-imports'])];
+var fs_1 = __importDefault(require("fs"));
+var commit_file_1 = require("./commit-file");
+var get_context_1 = require("./get-context");
+exports.updatePrettierFile = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var context, prettierRcPath, fileExists, fileBefore, _a, fileAfter;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                console.log('Checking for prettier updates...');
+                context = get_context_1.getContext();
+                if (context.ref !== 'heads/master') {
+                    console.log('Not checking for prettier file because we are not on master.');
+                    return [2 /*return*/];
+                }
+                prettierRcPath = '.prettierrc';
+                fileExists = fs_1.default.existsSync(prettierRcPath);
+                if (!fileExists) return [3 /*break*/, 2];
+                return [4 /*yield*/, fs_1.default.promises.readFile(prettierRcPath, 'utf8')];
             case 1:
-                _a.sent();
-                return [4 /*yield*/, add_missing_dependencies_1.addMissingDependencies([
-                        '@jonny/prettier-plugin-organize-imports',
-                        'eslint',
-                        'prettier',
-                    ])];
+                _a = _b.sent();
+                return [3 /*break*/, 3];
             case 2:
-                _a.sent();
-                return [4 /*yield*/, trigger_repository_dispatch_1.triggerRepositoryDispatch()];
+                _a = '';
+                _b.label = 3;
             case 3:
-                _a.sent();
-                return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
+                fileBefore = _a;
+                fileAfter = JSON.stringify({
+                    singleQuote: true,
+                    bracketSpacing: false,
+                    jsxBracketSameLine: false,
+                    useTabs: true,
+                    overrides: [
+                        {
+                            files: ['*.yml'],
+                            options: {
+                                singleQuote: false,
+                            },
+                        },
+                    ],
+                }, null, '\t');
+                if (fileBefore === fileAfter) {
+                    console.log('.prettierrc file is up to date!');
+                    return [2 /*return*/];
+                }
+                if (!(fileBefore !== fileAfter)) return [3 /*break*/, 5];
+                return [4 /*yield*/, commit_file_1.commitFiles([
+                        {
+                            content: fileAfter,
+                            path: prettierRcPath,
+                        },
+                    ], 'improved the .prettierrc file for you 🤖')];
             case 4:
-                _a.sent();
-                return [4 /*yield*/, update_prettier_file_1.updatePrettierFile()];
-            case 5:
-                _a.sent();
-                return [4 /*yield*/, fix_eslint_1.fixEslint()];
-            case 6:
-                _a.sent();
-                return [4 /*yield*/, fix_cocoapods_1.fixCocoaPods()];
-            case 7:
-                _a.sent();
-                return [2 /*return*/];
+                _b.sent();
+                console.log('Updated the .prettierrc file with the newest improvements.');
+                _b.label = 5;
+            case 5: return [2 /*return*/];
         }
     });
-}); });
+}); };

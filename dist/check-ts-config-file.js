@@ -90,7 +90,7 @@ exports.checkTsConfigFile = function () { return __awaiter(void 0, void 0, void 
                 tsConfig = _b.sent();
                 tsConfigWithoutComments = tsConfig
                     .split('\n')
-                    .filter(function (t) { return !t.trim().startsWith('//'); })
+                    .filter(function (t) { return !t.trim().startsWith('//') && !t.trim().startsWith('/*'); })
                     .join('\n');
                 parsedTsConfig = JSON.parse(tsConfigWithoutComments);
                 if (!parsedTsConfig.skipLibCheck) {

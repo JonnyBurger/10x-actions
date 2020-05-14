@@ -37,7 +37,7 @@ export const checkTsConfigFile = async (): Promise<void> => {
 	const tsConfig = await fs.promises.readFile(tsConfigPath, 'utf-8');
 	const tsConfigWithoutComments = tsConfig
 		.split('\n')
-		.filter((t) => !t.trim().startsWith('//'))
+		.filter((t) => !t.trim().startsWith('//') && !t.trim().startsWith('/*'))
 		.join('\n');
 
 	const parsedTsConfig = JSON.parse(tsConfigWithoutComments);

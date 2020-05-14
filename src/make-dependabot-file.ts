@@ -2,6 +2,7 @@ import xns from 'xns';
 import yaml from 'yaml';
 import {getContext} from './get-context';
 import {truthy} from './truthy';
+import {isReactNativeApp} from './is-react-native-app';
 
 const getIgnoredUpdates = (repo: string): string[] => {
 	return [
@@ -10,14 +11,6 @@ const getIgnoredUpdates = (repo: string): string[] => {
 		repo === 'JonnyBurger/bestande' ? '@types/uuid' : null,
 		repo === 'JonnyBurger/anysticker-app' ? 'react-native-bootsplash' : null,
 	].filter(truthy);
-};
-
-const isReactNativeApp = (repo: string): boolean => {
-	return (
-		repo === 'JonnyBurger/bestande' ||
-		repo === 'JonnyBurger/anysticker-app' ||
-		repo === 'JonnyBurger/pingpongtische'
-	);
 };
 
 const getAutomergedUpdates = (repo: string): string[] => {

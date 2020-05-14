@@ -25,6 +25,7 @@ var xns_1 = __importDefault(require("xns"));
 var yaml_1 = __importDefault(require("yaml"));
 var get_context_1 = require("./get-context");
 var truthy_1 = require("./truthy");
+var is_react_native_app_1 = require("./is-react-native-app");
 var getIgnoredUpdates = function (repo) {
     return [
         repo === 'JonnyBurger/bestande' ? 'uuid' : null,
@@ -33,18 +34,13 @@ var getIgnoredUpdates = function (repo) {
         repo === 'JonnyBurger/anysticker-app' ? 'react-native-bootsplash' : null,
     ].filter(truthy_1.truthy);
 };
-var isReactNativeApp = function (repo) {
-    return (repo === 'JonnyBurger/bestande' ||
-        repo === 'JonnyBurger/anysticker-app' ||
-        repo === 'JonnyBurger/pingpongtische');
-};
 var getAutomergedUpdates = function (repo) {
     return [
         'aws-sdk',
         'stripe',
         'tics',
         'semver',
-        isReactNativeApp(repo) ? '@react-native-community/cli' : null,
+        is_react_native_app_1.isReactNativeApp(repo) ? '@react-native-community/cli' : null,
         'ava',
         'polished',
         'prettier',
@@ -88,7 +84,7 @@ exports.makeDependabotFile = xns_1.default(function () {
                         },
                     };
                 })), version_requirement_updates: 'increase_versions' }),
-            isReactNativeApp(repo) && repo !== 'JonnyBurger/pingpongtische'
+            is_react_native_app_1.isReactNativeApp(repo) && repo !== 'JonnyBurger/pingpongtische'
                 ? {
                     package_manager: 'ruby:bundler',
                     directory: repo === 'JonnyBurger/bestande' ? '/app/ios' : '/',

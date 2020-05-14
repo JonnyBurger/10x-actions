@@ -44,33 +44,39 @@ var trigger_repository_dispatch_1 = require("./trigger-repository-dispatch");
 var update_dependabot_file_1 = require("./update-dependabot-file");
 var remove_extraneous_dependencies_1 = require("./remove-extraneous-dependencies");
 var update_prettier_file_1 = require("./update-prettier-file");
+var check_ts_config_file_1 = require("./check-ts-config-file");
 xns_1.xns(function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, remove_extraneous_dependencies_1.removeExtraneousDependencies(['prettier-plugin-organize-imports'])];
+            case 0: return [4 /*yield*/, remove_extraneous_dependencies_1.removeExtraneousDependencies([
+                    '@jonny/prettier-plugin-organize-imports',
+                ])];
             case 1:
                 _a.sent();
                 return [4 /*yield*/, add_missing_dependencies_1.addMissingDependencies([
-                        '@jonny/prettier-plugin-organize-imports',
+                        'prettier-plugin-organize-imports',
                         'eslint',
                         'prettier',
                     ])];
             case 2:
                 _a.sent();
-                return [4 /*yield*/, trigger_repository_dispatch_1.triggerRepositoryDispatch()];
+                return [4 /*yield*/, check_ts_config_file_1.checkTsConfigFile()];
             case 3:
                 _a.sent();
-                return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
+                return [4 /*yield*/, trigger_repository_dispatch_1.triggerRepositoryDispatch()];
             case 4:
                 _a.sent();
-                return [4 /*yield*/, update_prettier_file_1.updatePrettierFile()];
+                return [4 /*yield*/, update_dependabot_file_1.updateDependabotFile()];
             case 5:
                 _a.sent();
-                return [4 /*yield*/, fix_eslint_1.fixEslint()];
+                return [4 /*yield*/, update_prettier_file_1.updatePrettierFile()];
             case 6:
                 _a.sent();
-                return [4 /*yield*/, fix_cocoapods_1.fixCocoaPods()];
+                return [4 /*yield*/, fix_eslint_1.fixEslint()];
             case 7:
+                _a.sent();
+                return [4 /*yield*/, fix_cocoapods_1.fixCocoaPods()];
+            case 8:
                 _a.sent();
                 return [2 /*return*/];
         }

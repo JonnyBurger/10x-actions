@@ -37,7 +37,16 @@ export const checkTsConfigFile = async (): Promise<void> => {
 	const tsConfig = await fs.promises.readFile(tsConfigPath, 'utf-8');
 	const tsConfigWithoutComments = tsConfig
 		.split('\n')
-		.filter((t) => !t.trim().startsWith('//') && !t.trim().startsWith('/*'))
+		.map((t) => {
+			const indexOfSlashSlash = t.indexOf('//');
+			const indexOfSlashStar = t.indexOf('/*');
+			if (indexOfSlashSlash === -1 && indexOfSlashStar === -1) {
+				return t;
+			}
+			const minIndex =
+				indexOfSlashSlash === -1 ? indexOfSlashStar : indexOfSlashStar;
+			return t.substr(0, minIndex);
+		})
 		.join('\n');
 
 	const parsedTsConfig = JSON.parse(tsConfigWithoutComments);

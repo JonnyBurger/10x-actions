@@ -90,7 +90,15 @@ exports.checkTsConfigFile = function () { return __awaiter(void 0, void 0, void 
                 tsConfig = _b.sent();
                 tsConfigWithoutComments = tsConfig
                     .split('\n')
-                    .filter(function (t) { return !t.trim().startsWith('//') && !t.trim().startsWith('/*'); })
+                    .map(function (t) {
+                    var indexOfSlashSlash = t.indexOf('//');
+                    var indexOfSlashStar = t.indexOf('/*');
+                    if (indexOfSlashSlash === -1 && indexOfSlashStar === -1) {
+                        return t;
+                    }
+                    var minIndex = indexOfSlashSlash === -1 ? indexOfSlashStar : indexOfSlashStar;
+                    return t.substr(0, minIndex);
+                })
                     .join('\n');
                 parsedTsConfig = JSON.parse(tsConfigWithoutComments);
                 if (!parsedTsConfig.skipLibCheck) {

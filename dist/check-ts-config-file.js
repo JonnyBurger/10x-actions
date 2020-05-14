@@ -89,7 +89,7 @@ exports.checkTsConfigFile = function () { return __awaiter(void 0, void 0, void 
                 return [4 /*yield*/, fs_1.default.promises.readFile(tsConfigPath, 'utf-8')];
             case 1:
                 tsConfig = _b.sent();
-                parsedTsConfig = comment_json_1.default.parse(tsConfig);
+                parsedTsConfig = comment_json_1.default.parse(tsConfig, undefined, true);
                 if (!parsedTsConfig.skipLibCheck) {
                     parsedTsConfig.skipLibCheck = true;
                 }

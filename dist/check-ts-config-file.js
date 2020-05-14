@@ -90,8 +90,9 @@ exports.checkTsConfigFile = function () { return __awaiter(void 0, void 0, void 
             case 1:
                 tsConfig = _b.sent();
                 parsedTsConfig = comment_json_1.default.parse(tsConfig, undefined, true);
-                if (!parsedTsConfig.skipLibCheck) {
-                    parsedTsConfig.skipLibCheck = true;
+                delete parsedTsConfig.skipLibCheck;
+                if (!parsedTsConfig.compilerOptions.skipLibCheck) {
+                    parsedTsConfig.compilerOptions.skipLibCheck = true;
                 }
                 if (is_react_native_app_1.isReactNativeApp(repo)) {
                     if (!((_a = parsedTsConfig === null || parsedTsConfig === void 0 ? void 0 : parsedTsConfig.plugins) === null || _a === void 0 ? void 0 : _a.find(function (p) { return p.name === 'typescript-styled-plugin'; }))) {

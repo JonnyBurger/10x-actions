@@ -38,8 +38,9 @@ export const checkTsConfigFile = async (): Promise<void> => {
 	const tsConfig = await fs.promises.readFile(tsConfigPath, 'utf-8');
 
 	const parsedTsConfig = commentJson.parse(tsConfig, undefined, true);
-	if (!parsedTsConfig.skipLibCheck) {
-		parsedTsConfig.skipLibCheck = true;
+	delete parsedTsConfig.skipLibCheck;
+	if (!parsedTsConfig.compilerOptions.skipLibCheck) {
+		parsedTsConfig.compilerOptions.skipLibCheck = true;
 	}
 	if (isReactNativeApp(repo)) {
 		if (

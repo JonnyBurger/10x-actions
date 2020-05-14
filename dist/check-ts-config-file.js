@@ -74,7 +74,7 @@ var tsStyledPlugin = {
     },
 };
 exports.checkTsConfigFile = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var context, repo, tsConfigPath, tsConfig, parsedTsConfig, newFile;
+    var context, repo, tsConfigPath, tsConfig, tsConfigWithoutComments, parsedTsConfig, newFile;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -88,7 +88,11 @@ exports.checkTsConfigFile = function () { return __awaiter(void 0, void 0, void 
                 return [4 /*yield*/, fs_1.default.promises.readFile(tsConfigPath, 'utf-8')];
             case 1:
                 tsConfig = _b.sent();
-                parsedTsConfig = JSON.parse(tsConfig);
+                tsConfigWithoutComments = tsConfig
+                    .split('\n')
+                    .filter(function (t) { return !t.trim().startsWith('//'); })
+                    .join('\n');
+                parsedTsConfig = JSON.parse(tsConfigWithoutComments);
                 if (!parsedTsConfig.skipLibCheck) {
                     parsedTsConfig.skipLibCheck = true;
                 }

@@ -1,4 +1,5 @@
 import fs from 'fs';
+import commentJson from 'comment-json';
 import {isReactNativeApp} from './is-react-native-app';
 import {commitFiles} from './commit-file';
 import {getContext} from './get-context';
@@ -35,21 +36,8 @@ export const checkTsConfigFile = async (): Promise<void> => {
 	}
 
 	const tsConfig = await fs.promises.readFile(tsConfigPath, 'utf-8');
-	const tsConfigWithoutComments = tsConfig
-		.split('\n')
-		.map((t) => {
-			const indexOfSlashSlash = t.indexOf('//');
-			const indexOfSlashStar = t.indexOf('/*');
-			if (indexOfSlashSlash === -1 && indexOfSlashStar === -1) {
-				return t;
-			}
-			const minIndex =
-				indexOfSlashSlash === -1 ? indexOfSlashStar : indexOfSlashStar;
-			return t.substr(0, minIndex);
-		})
-		.join('\n');
 
-	const parsedTsConfig = JSON.parse(tsConfigWithoutComments);
+	const parsedTsConfig = commentJson.parse(tsConfig);
 	if (!parsedTsConfig.skipLibCheck) {
 		parsedTsConfig.skipLibCheck = true;
 	}

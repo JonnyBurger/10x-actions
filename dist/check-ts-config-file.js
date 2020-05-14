@@ -47,6 +47,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
+var comment_json_1 = __importDefault(require("comment-json"));
 var is_react_native_app_1 = require("./is-react-native-app");
 var commit_file_1 = require("./commit-file");
 var get_context_1 = require("./get-context");
@@ -74,7 +75,7 @@ var tsStyledPlugin = {
     },
 };
 exports.checkTsConfigFile = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var context, repo, tsConfigPath, tsConfig, tsConfigWithoutComments, parsedTsConfig, newFile;
+    var context, repo, tsConfigPath, tsConfig, parsedTsConfig, newFile;
     var _a;
     return __generator(this, function (_b) {
         switch (_b.label) {
@@ -88,19 +89,7 @@ exports.checkTsConfigFile = function () { return __awaiter(void 0, void 0, void 
                 return [4 /*yield*/, fs_1.default.promises.readFile(tsConfigPath, 'utf-8')];
             case 1:
                 tsConfig = _b.sent();
-                tsConfigWithoutComments = tsConfig
-                    .split('\n')
-                    .map(function (t) {
-                    var indexOfSlashSlash = t.indexOf('//');
-                    var indexOfSlashStar = t.indexOf('/*');
-                    if (indexOfSlashSlash === -1 && indexOfSlashStar === -1) {
-                        return t;
-                    }
-                    var minIndex = indexOfSlashSlash === -1 ? indexOfSlashStar : indexOfSlashStar;
-                    return t.substr(0, minIndex);
-                })
-                    .join('\n');
-                parsedTsConfig = JSON.parse(tsConfigWithoutComments);
+                parsedTsConfig = comment_json_1.default.parse(tsConfig);
                 if (!parsedTsConfig.skipLibCheck) {
                     parsedTsConfig.skipLibCheck = true;
                 }

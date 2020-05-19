@@ -32,6 +32,7 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'react-native-device-info',
 		'react-native-redash',
 		'typescript',
+		'date-fns',
 		'ts-unused-exports',
 	].filter(truthy);
 };

@@ -53,6 +53,7 @@ var getAutomergedUpdates = function (repo) {
         'react-native-device-info',
         'react-native-redash',
         'typescript',
+        'date-fns',
         'ts-unused-exports',
     ].filter(truthy_1.truthy);
 };

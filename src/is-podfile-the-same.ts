@@ -1,5 +1,11 @@
 export const isPodfileTheSame = (file1: string, file2: string): boolean => {
-	const exceptions = ['DoubleConversion', 'Folly', 'glog'];
+	const exceptions = [
+		'DoubleConversion',
+		'Folly',
+		'glog',
+		'COCOAPODS: ',
+		'PODFILE CHECKSUM:',
+	];
 	const split1 = file1.split('\n');
 	const split2 = file2.split('\n');
 

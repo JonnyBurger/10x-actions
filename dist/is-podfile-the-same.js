@@ -1,7 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isPodfileTheSame = function (file1, file2) {
-    var exceptions = ['DoubleConversion', 'Folly', 'glog'];
+    var exceptions = [
+        'DoubleConversion',
+        'Folly',
+        'glog',
+        'COCOAPODS: ',
+        'PODFILE CHECKSUM:',
+    ];
     var split1 = file1.split('\n');
     var split2 = file2.split('\n');
     if (split2.length !== split1.length) {

@@ -88,7 +88,7 @@ exports.makeDependabotFile = xns_1.default(function () {
             is_react_native_app_1.isReactNativeApp(repo) && repo !== 'JonnyBurger/pingpongtische'
                 ? {
                     package_manager: 'ruby:bundler',
-                    directory: repo === 'JonnyBurger/bestande' ? '/app/ios' : '/',
+                    directory: repo === 'JonnyBurger/bestande' ? '/ios' : '/',
                     update_schedule: 'live',
                     automerged_updates: [
                         {
@@ -102,7 +102,7 @@ exports.makeDependabotFile = xns_1.default(function () {
             repo === 'JonnyBurger/bestande'
                 ? {
                     package_manager: 'ruby:bundler',
-                    directory: repo === 'JonnyBurger/bestande' ? '/app/android' : '/',
+                    directory: repo === 'JonnyBurger/bestande' ? '/android' : '/',
                     update_schedule: 'live',
                     automerged_updates: [
                         {

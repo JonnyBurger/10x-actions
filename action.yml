@@ -3,3 +3,7 @@ description: "Run CocoaPods `pod install`"
 runs:
   using: "node12"
   main: "dist/index.js"
+inputs:
+  github-token:
+    description: "Your Github token"
+    required: true

@@ -64,7 +64,7 @@ exports.fixCocoaPods = function () { return __awaiter(void 0, void 0, void 0, fu
                 podfilePath = cwd + "/Podfile";
                 podfileLockPath = cwd + "/Podfile.lock";
                 console.log('Got Podfile before, now running pod install...');
-                return [4 /*yield*/, exec.exec('pod', ['install'], {
+                return [4 /*yield*/, exec.exec('pod', ['install', '--repo-update'], {
                         cwd: cwd,
                     })];
             case 3:

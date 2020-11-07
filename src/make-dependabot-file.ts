@@ -11,6 +11,7 @@ const getIgnoredUpdates = (repo: string): string[] => {
 		repo === 'JonnyBurger/bestande' ? '@types/uuid' : null,
 		repo === 'JonnyBurger/anysticker-app' ? 'react-native-bootsplash' : null,
 		'metro-react-native-babel-preset',
+		'metro',
 	].filter(truthy);
 };
 

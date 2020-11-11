@@ -57,6 +57,13 @@ var getAutomergedUpdates = function (repo) {
         'typescript',
         'date-fns',
         'ts-unused-exports',
+        'ts-loader',
+        'react-native-screens',
+        '@react-native-community/async-storage',
+        'pg',
+        'webpack-dev-middleware',
+        'ts-jest',
+        'jest',
     ].filter(truthy_1.truthy);
 };
 exports.makeDependabotFile = xns_1.default(function () {

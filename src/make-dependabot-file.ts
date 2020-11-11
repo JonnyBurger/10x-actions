@@ -36,6 +36,13 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'typescript',
 		'date-fns',
 		'ts-unused-exports',
+		'ts-loader',
+		'react-native-screens',
+		'@react-native-community/async-storage',
+		'pg',
+		'webpack-dev-middleware',
+		'ts-jest',
+		'jest',
 	].filter(truthy);
 };
 

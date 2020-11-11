@@ -32,6 +32,8 @@ var getIgnoredUpdates = function (repo) {
         repo === 'JonnyBurger/bestande' ? 'file-loader' : null,
         repo === 'JonnyBurger/bestande' ? '@types/uuid' : null,
         repo === 'JonnyBurger/anysticker-app' ? 'react-native-bootsplash' : null,
+        'metro-react-native-babel-preset',
+        'metro',
     ].filter(truthy_1.truthy);
 };
 var getAutomergedUpdates = function (repo) {
@@ -55,6 +57,13 @@ var getAutomergedUpdates = function (repo) {
         'typescript',
         'date-fns',
         'ts-unused-exports',
+        'ts-loader',
+        'react-native-screens',
+        '@react-native-community/async-storage',
+        'pg',
+        'webpack-dev-middleware',
+        'ts-jest',
+        'jest',
     ].filter(truthy_1.truthy);
 };
 exports.makeDependabotFile = xns_1.default(function () {
@@ -85,24 +94,10 @@ exports.makeDependabotFile = xns_1.default(function () {
                         },
                     };
                 })), version_requirement_updates: 'increase_versions' }),
-            is_react_native_app_1.isReactNativeApp(repo) && repo !== 'JonnyBurger/pingpongtische'
+            is_react_native_app_1.isReactNativeApp(repo)
                 ? {
                     package_manager: 'ruby:bundler',
-                    directory: repo === 'JonnyBurger/bestande' ? '/ios' : '/',
-                    update_schedule: 'live',
-                    automerged_updates: [
-                        {
-                            match: {
-                                dependency_name: 'fastlane',
-                            },
-                        },
-                    ],
-                }
-                : null,
-            repo === 'JonnyBurger/bestande'
-                ? {
-                    package_manager: 'ruby:bundler',
-                    directory: repo === 'JonnyBurger/bestande' ? '/android' : '/',
+                    directory: '/',
                     update_schedule: 'live',
                     automerged_updates: [
                         {

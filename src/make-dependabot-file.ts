@@ -10,6 +10,8 @@ const getIgnoredUpdates = (repo: string): string[] => {
 		repo === 'JonnyBurger/bestande' ? 'file-loader' : null,
 		repo === 'JonnyBurger/bestande' ? '@types/uuid' : null,
 		repo === 'JonnyBurger/anysticker-app' ? 'react-native-bootsplash' : null,
+		'metro-react-native-babel-preset',
+		'metro',
 	].filter(truthy);
 };
 
@@ -34,6 +36,13 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'typescript',
 		'date-fns',
 		'ts-unused-exports',
+		'ts-loader',
+		'react-native-screens',
+		'@react-native-community/async-storage',
+		'pg',
+		'webpack-dev-middleware',
+		'ts-jest',
+		'jest',
 	].filter(truthy);
 };
 
@@ -73,24 +82,10 @@ export const makeDependabotFile = xns(() => {
 				],
 				version_requirement_updates: 'increase_versions',
 			},
-			isReactNativeApp(repo) && repo !== 'JonnyBurger/pingpongtische'
+			isReactNativeApp(repo)
 				? {
 						package_manager: 'ruby:bundler',
-						directory: repo === 'JonnyBurger/bestande' ? '/ios' : '/',
-						update_schedule: 'live',
-						automerged_updates: [
-							{
-								match: {
-									dependency_name: 'fastlane',
-								},
-							},
-						],
-				  }
-				: null,
-			repo === 'JonnyBurger/bestande'
-				? {
-						package_manager: 'ruby:bundler',
-						directory: repo === 'JonnyBurger/bestande' ? '/android' : '/',
+						directory: '/',
 						update_schedule: 'live',
 						automerged_updates: [
 							{

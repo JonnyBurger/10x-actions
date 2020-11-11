@@ -87,24 +87,10 @@ exports.makeDependabotFile = xns_1.default(function () {
                         },
                     };
                 })), version_requirement_updates: 'increase_versions' }),
-            is_react_native_app_1.isReactNativeApp(repo) && repo !== 'JonnyBurger/pingpongtische'
+            is_react_native_app_1.isReactNativeApp(repo)
                 ? {
                     package_manager: 'ruby:bundler',
-                    directory: repo === 'JonnyBurger/bestande' ? '/ios' : '/',
-                    update_schedule: 'live',
-                    automerged_updates: [
-                        {
-                            match: {
-                                dependency_name: 'fastlane',
-                            },
-                        },
-                    ],
-                }
-                : null,
-            repo === 'JonnyBurger/bestande'
-                ? {
-                    package_manager: 'ruby:bundler',
-                    directory: repo === 'JonnyBurger/bestande' ? '/android' : '/',
+                    directory: '/',
                     update_schedule: 'live',
                     automerged_updates: [
                         {

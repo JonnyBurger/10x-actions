@@ -22,6 +22,7 @@ export const fixCocoaPods = async (): Promise<void> => {
 	const podfilePath = `${cwd}/Podfile`;
 	const podfileLockPath = `${cwd}/Podfile.lock`;
 	console.log('Got Podfile before, now running pod install...');
+	await exec.exec('pod', ['repo', 'update'], {cwd});
 	await exec.exec('pod', ['install', '--repo-update'], {
 		cwd,
 	});

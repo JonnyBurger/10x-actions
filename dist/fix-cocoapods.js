@@ -64,16 +64,19 @@ exports.fixCocoaPods = function () { return __awaiter(void 0, void 0, void 0, fu
                 podfilePath = cwd + "/Podfile";
                 podfileLockPath = cwd + "/Podfile.lock";
                 console.log('Got Podfile before, now running pod install...');
+                return [4 /*yield*/, exec.exec('pod', ['repo', 'update'], { cwd: cwd })];
+            case 3:
+                _a.sent();
                 return [4 /*yield*/, exec.exec('pod', ['install', '--repo-update'], {
                         cwd: cwd,
                     })];
-            case 3:
+            case 4:
                 _a.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(podfilePath, 'utf-8')];
-            case 4:
+            case 5:
                 podfileAfter = _a.sent();
                 return [4 /*yield*/, fs_1.default.promises.readFile(podfileLockPath, 'utf-8')];
-            case 5:
+            case 6:
                 podfileLockAfter = _a.sent();
                 console.log('Got Podfile before, now running pod install...');
                 if (is_podfile_the_same_1.isPodfileTheSame(podfileLockAfter, podfileLockBefore) &&
@@ -89,7 +92,7 @@ exports.fixCocoaPods = function () { return __awaiter(void 0, void 0, void 0, fu
                             content: podfileLockAfter,
                         },
                     ], '🤖 Fixed your fucking Podfile')];
-            case 6:
+            case 7:
                 _a.sent();
                 console.log('Fixed the fucking Podfile.');
                 return [2 /*return*/];

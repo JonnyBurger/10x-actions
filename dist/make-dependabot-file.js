@@ -48,6 +48,8 @@ var getAutomergedUpdates = function (repo) {
         'prettier',
         '@jonny/eslint-config',
         'ts-node',
+        'mongodb',
+        'css-loader',
         'mongodb-memory-server',
         '@react-navigation/bottom-tabs',
         '@react-navigation/native',
@@ -64,6 +66,7 @@ var getAutomergedUpdates = function (repo) {
         'webpack-dev-middleware',
         'ts-jest',
         'jest',
+        'babel-preset-react',
     ].filter(truthy_1.truthy);
 };
 exports.makeDependabotFile = xns_1.default(function () {

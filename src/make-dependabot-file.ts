@@ -27,6 +27,8 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'prettier',
 		'@jonny/eslint-config',
 		'ts-node',
+		'mongodb',
+		'css-loader',
 		'mongodb-memory-server',
 		'@react-navigation/bottom-tabs',
 		'@react-navigation/native',
@@ -43,6 +45,7 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'webpack-dev-middleware',
 		'ts-jest',
 		'jest',
+		'babel-preset-react',
 	].filter(truthy);
 };
 

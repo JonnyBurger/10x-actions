@@ -46,6 +46,7 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'ts-jest',
 		'jest',
 		'babel-preset-react',
+		'react-native-safe-area-context',
 	].filter(truthy);
 };
 

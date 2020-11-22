@@ -47,6 +47,7 @@ const getAutomergedUpdates = (repo: string): string[] => {
 		'jest',
 		'babel-preset-react',
 		'react-native-safe-area-context',
+		'eslint',
 	].filter(truthy);
 };
 

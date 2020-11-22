@@ -68,6 +68,7 @@ var getAutomergedUpdates = function (repo) {
         'jest',
         'babel-preset-react',
         'react-native-safe-area-context',
+        'eslint',
     ].filter(truthy_1.truthy);
 };
 exports.makeDependabotFile = xns_1.default(function () {
